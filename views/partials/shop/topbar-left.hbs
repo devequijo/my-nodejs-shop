@@ -1,0 +1,40 @@
+    <header id="header" class="header-v1">
+        <div class="sticky-header text-center hidden-xs hidden-sm">
+            <div class="text">
+                <span class="u-line">Envio gratis</span> en compras superiores a 40€
+            </div>
+        </div>
+        <div class="topbar">
+            <div class="container container-40">
+                <div class="topbar-left">
+                    <div style='color:orangered'class="topbar-option">
+                        <div class="topbar-account">
+                            <a href="#"><i class="icon-user f-15"></i></a> 
+                            {{#if user}}
+                            Hola {{user}} <a href='logout'><i class="fas fa-sign-out-alt"></i></a><br>Mensajes nuevos 
+                            <span class="count cart-count">1</span>{{else}}
+                            <a style='color:teal' href='login'a>Inicia la sesion</a> o <a style="color:rgb(182, 19, 19)" href='register'>registrate</a>!
+                            {{/if}}
+                        </div>
+                        {{!-- <div class="topbar-wishlist">
+                            <a href="#">
+                                <i class="icon-heart f-15"></i>
+                                <span class="count wishlist-count">0</span>
+                            </a>
+                        </div>
+                        <div class="topbar-language dropdown">
+                            <a id="label1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            
+                              <span>{{#if lang}}
+                                  {{lang}}{{else}}ES{{/if}}</span>
+                              <span class="fa fa-caret-down f-10"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="label1">
+                                <li><a href="#">English</a></li>
+                                <li><a href="#">Russian</a></li>
+                            </ul>
+                        </div> --}}
+                    </div>
+                    <!--end topbar-option-->
+                </div>
+                <!--end topbar-left-->

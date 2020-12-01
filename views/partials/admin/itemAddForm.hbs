@@ -1,0 +1,87 @@
+
+
+
+
+    <form  method="post" action="test">
+        <div class="form-group row">
+            <div class="form-group">
+            <label class="col-sm-2 col-form-label">Добавление товара в магазин</label>
+
+
+
+
+ {{!-- {{> admin/showItems}} --}}
+
+            <input type="text" class="form-control" name="name" placeholder="Наименование товара" ><br>
+            <div class="input-images"></div>
+            <input type="text" class="form-control" id="thumb" name="thumb" placeholder="URL миниатюрной картинки"><br>
+            <input type="text" class="form-control" id="price" name="price" placeholder="Цена в евро за 50 грамм">
+        </div>
+
+
+
+
+                        <label for="exampleFormControlTextarea1">Описание продукта</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"></textarea>
+                    </div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Основная категория товара.</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mainCat" id="cat1" value="option1" checked>
+                                    <label class="form-check-label" for="cat1">
+                                        Шу Пуэр
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mainCat" id="cat2" value="option2">
+                                    <label class="form-check-label" for="cat2">
+                                        Шен Пуэр
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group row">
+                        <div class="col-sm-2">Параметры отображения</div>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" checked>
+                                <label class="form-check-label" for="gridCheck1">
+                                    Купить с шагом 50 гр
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" checked>
+                                <label class="form-check-label" for="gridCheck1">
+                                Показывать в рекомандуемых&nbsp; </label>
+                            </div>
+                          <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1">
+                              <label class="form-check-label" for="gridCheck1">
+                              Новинка&nbsp; </label>
+                            </div>
+                          <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1">
+                              <label for="textfield">Скидка:</label>
+                                <input type="text" name="textfield" id="textfield">
+                              <label class="form-check-label" for="gridCheck1">
+                              %&nbsp;&nbsp; </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Добавить!</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- Content here -->
+            
+
+            <script>
+     $('.input-images').imageUploader();
+ </script>

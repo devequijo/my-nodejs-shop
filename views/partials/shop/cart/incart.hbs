@@ -1,0 +1,27 @@
+<table><br>
+
+                                <tbody>
+                                    <tr class="item_cart">
+                                      {{#each inCart}}
+                                      
+                                        <td class="produc-name"><a href="/view/{{_id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
+                                            <div class="quantity input-group">
+                                                {{!-- <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field=""> --}}
+                                                    {{!-- <span class="minus-icon">-</span> --}}
+                                                </button>
+                                                <input type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number">
+                                                {{!-- <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field=""> --}}
+                                                    {{!-- <span class="plus-icon">+</span> --}}
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="total-price">
+                                            <a style='margin-left:5e !important' class="remove" href="#" title=""><i class="fas fa-trash-alt"></i></a>
+                                            <p class="price">
+                                                {{#calcPrice cantidad finalPrice}}{{/calcPrice}}€
+                                            </p>
+                                        </td>
+                                    </tr><br>
+                               {{/each}}
+                                </tbody>
+                            </table>

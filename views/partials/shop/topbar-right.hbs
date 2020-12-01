@@ -1,0 +1,32 @@
+                <div class="topbar-right">
+                    <div class="topbar-option">
+                        <div class="topbar-currency dropdown">
+                            <a id="label2" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            
+                              <span>USD</span>
+                              <span class="fa fa-caret-down f-10"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="label2">
+                                <li><a href="#">EUR</a></li>
+                                <li><a href="#">USD</a></li>
+                                <li><a href="#">RUB</a></li>
+                                
+                            </ul>
+                        </div>
+                        <div class="topbar-search">
+                            <div class="search-popup dropdown" data-toggle="modal" data-target="#myModal">
+                                <a href="#"><i class="icon-magnifier f-15"></i></a>
+                            </div>
+                        </div>
+                        <div class="topbar-cart">
+                            <a href="#" class="icon-cart">
+                                <i class="icon-basket f-15"></i>
+                                {{#if inCart.length}}
+                                <span class="count cart-count">{{inCart.length}}</span>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </div>
+                    <!--end topbar-option-->
+                </div>
+                <!--end topbar-right-->
