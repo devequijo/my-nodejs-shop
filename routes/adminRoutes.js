@@ -37,11 +37,10 @@ function checkAdmin(req,res,next){
 
 
 router.get('/admin', async (req,res)=>{
-
-console.log(await Items.find())
+  let items = await Items.find().lean()
   
 
-  res.render('admin', {})
+  res.render('admin', {allItems:items})
   
 })
 

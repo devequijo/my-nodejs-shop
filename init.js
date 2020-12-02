@@ -25,7 +25,7 @@ app.use(express.json())
 
 
 const start = () =>{
-    mongoose.connect(config.databaseURI, {useNewUrlParser:true,autoIndex:false, useCreateIndex:true, useUnifiedTopology:true}).then(()=>{
+    mongoose.connect(config.databaseURI, {useNewUrlParser:true,autoIndex:false,useFindAndModify:false, useCreateIndex:true, useUnifiedTopology:true}).then(()=>{
         app.listen(3000, ()=> console.log('Listening'))
     })
     

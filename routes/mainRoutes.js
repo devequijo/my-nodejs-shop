@@ -17,6 +17,10 @@ function checkAuth(req,res,next){
     res.redirect('/login')
 }
 
+router.post('/removeItem', checkAuth, async (req, res)=>{
+    const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id}, { $pull: { inCart: { id: req.body.id } } })
+    res.redirect(req.headers.referer)
+})
 
 router.post('/addToCart', checkAuth, async (req,res)=>{
  
@@ -45,12 +49,13 @@ router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
     const user = await Users.findById(req.user._id)
     const item = await Items.findById(req.params.id)
     user.inCart.push({
+        id: shortid.generate(),
         articulo: item,
         cantidad: req.params.cantidad,
-        finalPrice: (item.price*(item.offer/100))
+        finalPrice: (item.price-(item.price*(item.offer/100)))
     })
     await user.save()
-    res.redirect('/')
+    res.redirect(req.headers.referer)
 })
 
 router.get('/', async (req,res)=>{

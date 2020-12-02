@@ -3,7 +3,8 @@
                                 <tbody>
                                     <tr class="item_cart">
                                       {{#each inCart}}
-                                      
+                                      <form id="{{id}}" action="removeItem" method="post">
+                                      <input type="hidden" value="{{id}}" name="id">
                                         <td class="produc-name"><a href="/view/{{_id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
                                             <div class="quantity input-group">
                                                 {{!-- <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field=""> --}}
@@ -16,12 +17,12 @@
                                             </div>
                                         </td>
                                         <td class="total-price">
-                                            <a style='margin-left:5e !important' class="remove" href="#" title=""><i class="fas fa-trash-alt"></i></a>
+                                            <a style='margin-left:5e !important' class="remove" href="javascript:{}" onclick="document.getElementById('{{id}}').submit();"><i class="fas fa-trash-alt"></i></a>
                                             <p class="price">
                                                 {{#calcPrice cantidad finalPrice}}{{/calcPrice}}€
                                             </p>
                                         </td>
-                                    </tr><br>
+                                    </tr><br></form>
                                {{/each}}
                                 </tbody>
                             </table>
