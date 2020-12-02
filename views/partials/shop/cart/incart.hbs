@@ -1,3 +1,25 @@
+<script>
+
+function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+
+</script>
+
 <table><br>
 
                                 <tbody>
@@ -10,7 +32,9 @@
                                                 {{!-- <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field=""> --}}
                                                     {{!-- <span class="minus-icon">-</span> --}}
                                                 </button>
-                                                <input type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number">
+                                                <input id="newCantidad" type="hidden" value="{{cantidad}}">
+                                                <input id="newId" type="hidden" value="{{id}}">
+                                                <input id="cantidad" onkeypress='validate(event)' type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js">
                                                 {{!-- <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field=""> --}}
                                                     {{!-- <span class="plus-icon">+</span> --}}
                                                 </button>

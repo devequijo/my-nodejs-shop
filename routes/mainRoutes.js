@@ -8,6 +8,7 @@ const Items = require('../models/Item')
 const Cart = require('../models/Cart')
 
 const {body, validationResult} = require('express-validator')
+const { findOne } = require('../models/User')
 
 
 function checkAuth(req,res,next){
@@ -21,6 +22,16 @@ router.post('/removeItem', checkAuth, async (req, res)=>{
     const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id}, { $pull: { inCart: { id: req.body.id } } })
     res.redirect(req.headers.referer)
 })
+
+
+router.post('/cantidad', async (req, res)=>{
+    
+const test = await Users.findOne({'inCart.id': req.body.id})
+  const cart = await Users.findOneAndUpdate({'inCart.id' : 'jd1KLROua'},  { 'inCart.$.cantidad': req.body.cantidad })
+    console.log(test)
+    res.json(test)
+})
+
 
 router.post('/addToCart', checkAuth, async (req,res)=>{
  

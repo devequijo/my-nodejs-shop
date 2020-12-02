@@ -9,6 +9,24 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#cantidad').change(function(e){
+        let a = document.getElementById('cantidad')
+        let b = document.getElementById('newId')
+        e.preventDefault();
+        
+        $.ajax({
+            url: '/cantidad',
+            type: 'post',
+            data:{
+                id:b.value,
+                cantidad:a.value},
+            success:function(){
+                document.location.reload()
+            }
+        });
+    });
+
+
     $(".js-filter-menu li .js-plus-icon").on("click", function() {
         $(this).toggleClass('minus');
         $(this).parent().find(".filter-menu").slideToggle(function() {
