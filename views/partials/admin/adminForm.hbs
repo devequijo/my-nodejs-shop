@@ -1,3 +1,4 @@
+  <script type="text/javascript" src="/js/autofill.js"></script>
    <div class="container">
             <h2 class="faq-title text-center">Добро пожаловать в панель управления управления чайным складом!</h2>
             <div class="faq js-faq">
@@ -21,13 +22,16 @@
                     </div>
                 </div>
                 <div class="faq-content">
-                    <a href="" onClick="return false;" class="faq-quest">Блокнот админов
+                    <a href="" onClick="return false;" class="faq-quest">Загрузка картинок, привязка к товару
                     
                 </a>
                     <span class="plus js-plus-icon"></span>
                     <div class="faq-answer">
                         
-                        <p>Место для хранения важной и не очень информации!</p>
+                          <div class="form-group">
+{{>admin/addImagesForm}}
+  </div>
+
                     </div>
                 </div>
                 <div class="faq-content">
@@ -56,3 +60,5 @@
                 </div>
             </div>
         </div>
+     
+   

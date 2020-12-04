@@ -41,12 +41,12 @@ jQuery(document).ready(function($) {
         });
     });
     // Open menu dropdown home 5
-    $(".js-menubar > li > a").on("click", function() {
-        $(this).toggleClass('active');
-        $(this).parent().find(".js-open-menu").slideToggle(function() {
-            $(this).next().stop(true).toggleClass('open', $(this).is(":visible"));
-        });
-    });
+    // $(".js-menubar > li > a").on("click", function() {
+    //     $(this).toggleClass('active');
+    //     $(this).parent().find(".js-open-menu").slideToggle(function() {
+    //         $(this).next().stop(true).toggleClass('open', $(this).is(":visible"));
+    //     });
+    // });
     // Push menu home 5
     var menuLeft = $('.pushmenu-left');
     var menuHome6 = $('.menu-home5');
@@ -732,20 +732,20 @@ jQuery(document).ready(function($) {
 
     // STICKY HEADER
   
-    $(window).scroll(function(e) {
-        if($(window).width()>1199) {
-          if($(window).scrollTop()>145) {     
-            $('.header-v1 .header-top').addClass("fixed-header fadeInDown");  
-            $('.header-v3 .topbar').addClass("fixed-header fadeInDown"); 
-            $('.header-v4 .topbar').addClass("fixed-header fadeInDown");   
-            $('.header-v5 .topbar').addClass("fixed-header fadeInDown");                   
-          } else {
-            $('.header-v1 .header-top').removeClass("fixed-header fadeInDown"); 
-            $('.header-v3 .topbar').removeClass("fixed-header fadeInDown"); 
-            $('.header-v4 .topbar').removeClass("fixed-header fadeInDown");  
-            $('.header-v5 .topbar').removeClass("fixed-header fadeInDown");                 
-         }
-        }
-    });
+    // $(window).scroll(function(e) {
+    //     if($(window).width()>1199) {
+    //       if($(window).scrollTop()>145) {     
+    //         $('.header-v1 .header-top').addClass("fixed-header fadeInDown");  
+    //         $('.header-v3 .topbar').addClass("fixed-header fadeInDown"); 
+    //         $('.header-v4 .topbar').addClass("fixed-header fadeInDown");   
+    //         $('.header-v5 .topbar').addClass("fixed-header fadeInDown");                   
+    //       } else {
+    //         $('.header-v1 .header-top').removeClass("fixed-header fadeInDown"); 
+    //         $('.header-v3 .topbar').removeClass("fixed-header fadeInDown"); 
+    //         $('.header-v4 .topbar').removeClass("fixed-header fadeInDown");  
+    //         $('.header-v5 .topbar').removeClass("fixed-header fadeInDown");                 
+    //      }
+    //     }
+    // });
   
 });

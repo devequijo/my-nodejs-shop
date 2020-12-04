@@ -57,6 +57,7 @@ router.post('/addToCart', checkAuth, async (req,res)=>{
 
 })
 router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
+   if (!isNaN(parseInt(req.params.cantidad))){
     const user = await Users.findById(req.user._id)
     const item = await Items.findById(req.params.id)
     user.inCart.push({
@@ -64,10 +65,11 @@ router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
         articulo: item,
         cantidad: req.params.cantidad,
         finalPrice: (item.price-(item.price*(item.offer/100)))
-    })
+   } )
+
     await user.save()
-    res.redirect(req.headers.referer)
-})
+    res.redirect(req.headers.referer)} else {res.json({'message':'fuck u'})
+}})
 
 router.get('/', async (req,res)=>{
     let items = await Items.find().lean()

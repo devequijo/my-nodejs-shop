@@ -1,0 +1,16 @@
+<form id="singleUpload" action="imageAdd" method="post" enctype="multipart/form-data">
+    Выбор картинки для загрузки
+    <input type="file" name="image" id="image" >
+    <input type="hidden" name="itemId" value="{{_id}}">
+    <input type="submit" value="Загрузка обложки" name="submit">
+    </form>
+
+
+<form action="multiUpload" method="post" enctype="multipart/form-data">
+    <input type="file" name='file' placeholder="Select file"/ multiple>
+    <input type="hidden" value="{{_id}}" name="itemId">
+    <br/>
+    <button>Upload</button>
+</form>
+  
+

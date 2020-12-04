@@ -21,6 +21,7 @@ const itemSchema = new mongoose.Schema({
     newOne: Boolean,
     isRecomended: Boolean,
     thumb: String,
+    mainImage: String,
     images: {type: mongoose.Schema.Types.Mixed, ref: mongoose.model('images', imagesSchema)},
     categories : {type: mongoose.Schema.Types.Mixed, ref : mongoose.model('categories', categorySchema)}, 
     // author: {type:mongoose.Schema.Types.Mixed, ref: User}   

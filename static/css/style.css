@@ -6612,6 +6612,10 @@ body {
 .pushmenu-push-toright .wrappage {
   position: relative; }
 
+.oculto {
+  display:none
+}
+
 .pushmenu-push-toright-cart .wrappage:after {
   position: absolute;
   background: rgba(29, 29, 31, 0.6) none repeat scroll 0 0;

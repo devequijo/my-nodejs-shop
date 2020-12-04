@@ -19,6 +19,7 @@ app.set('view engine', 'hbs')
 app.set('views', 'views')
 app.use(express.static('static'));
 app.use('/view/', express.static('static') )
+app.use('/addImages/', express.static('static') )
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())

@@ -1,4 +1,4 @@
-<p>
+{{!-- <p>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
      Редактировать/удалить товар из базы
   </button>
@@ -6,16 +6,20 @@
 <div class="collapse" id="collapseExample">
   <div class="card card-body">
 
-
+ --}}
 
 <ul class="list-group cProductsList"> 
   {{#each allItems}}
-    <li class="list-group-item d-flex justify-content-between"><p class="p-0 m-0 flex-grow-1">{{name}}<t>: {{description}}</t></p> 
-    	<button type="button" onclick="location.href='edit/{{id}}'" class="btn-success">EDIT</button>  <button onclick="location.href='delete/{{_id}}'" type="button" class="btn-danger">DELETE</button>
-        <input name="_id" type="hidden" value="{{id}}">
+    <li class="list-group-item d-flex justify-content-between"><p class="p-0 m-0 flex-grow-1"><b>{{name}}<t>:</b>  {{description}}</t></p> 
+    	<button type="button" onclick="location.href='edit/{{_id}}'" class="btn-success">EDIT</button>  <button onclick="location.href='/deleteItem/{{_id}}'" type="button" class="btn-danger">DELETE</button>
+       <button type="button" onclick="$('#{{_id}}').removeClass('oculto')" class="btn-success">ADD IMAGES</button>
+      
+      <div id="{{_id}}" class="oculto">
+        {{>admin/addImagesForm}}
+      </div>
   {{/each}}
 </ul>
 
 
-  </div>
-</div><br>
+  {{!-- </div>
+</div><br> --}}
