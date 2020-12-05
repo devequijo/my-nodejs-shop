@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('./User')
-const categorySchema = new mongoose.Schema({
-    cat : String
-})
+const Cat = require('./Cat')
 
 
 const imagesSchema = new mongoose.Schema({
@@ -23,7 +21,7 @@ const itemSchema = new mongoose.Schema({
     thumb: String,
     mainImage: String,
     images: {type: mongoose.Schema.Types.Mixed, ref: mongoose.model('images', imagesSchema)},
-    categories : {type: mongoose.Schema.Types.Mixed, ref : mongoose.model('categories', categorySchema)}, 
+    categories : {type: mongoose.Schema.Types.Mixed, ref : Cat}, 
     // author: {type:mongoose.Schema.Types.Mixed, ref: User}   
 })
 

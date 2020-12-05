@@ -2,7 +2,7 @@
 
 
 
-    <form  method="post" action="itemAdd">
+    <form  method="post" action="itemAdd" enctype="multipart/form-data">
         <div class="form-group row">
             <div class="form-group">
             <label class="col-sm-2 col-form-label">Добавление товара в магазин</label>
@@ -13,9 +13,9 @@
  {{!-- {{> admin/showItems}} --}}
 
             <input type="text" class="form-control" name="name" placeholder="Наименование товара" ><br>
-            <div class="input-images"></div>
+           
             <input type="text" class="form-control" id="thumb" name="thumb" placeholder="URL миниатюрной картинки"><br>
-            
+           
             <input type="text" class="form-control" id="price" name="price" placeholder="Цена в евро за 50 грамм">
         </div>
 
@@ -29,18 +29,9 @@
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">Основная категория товара.</legend>
                             <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="mainCat" id="cat1" value="option1" checked>
-                                    <label class="form-check-label" for="cat1">
-                                        Шу Пуэр
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="mainCat" id="cat2" value="option2">
-                                    <label class="form-check-label" for="cat2">
-                                        Шен Пуэр
-                                    </label>
-                                </div>
+                         <select name="cat">
+                        {{#each categoria}} <option value="{{cat}}"> {{cat}} </option> {{/each}}
+                            </select>
                             </div>
                         </div>
                     </fieldset>

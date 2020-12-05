@@ -97,6 +97,9 @@ jQuery(document).ready(function($) {
         // Increment    
     });
 
+
+
+
     $('.js-minus').on("click", function(e) {
         // Stop acting like a button
         e.preventDefault();
@@ -748,4 +751,57 @@ jQuery(document).ready(function($) {
     //     }
     // });
   
+
+
+
+
+
+
+$("#addCat").on('click', (e)=>{
+    let categoria = $("#categoria").val()
+    e.preventDefault()
+    $.ajax
+    ({
+      type: "POST",
+      url: "addCat",
+      data: { newCategoria: categoria},
+      success: function (data) {
+        $('.result').html(data);
+       
+      }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

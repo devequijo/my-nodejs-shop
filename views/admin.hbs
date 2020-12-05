@@ -6,7 +6,11 @@
 {{> shop/topbar-right}}
 {{> shop/logoMobile}}
 {{> shop/myNavpage}}
+{{#if aftherAddImage}}
+{{>admin/aftherAddImage}}
+{{else}}
 {{> admin/adminForm}}
+{{/if}}
 {{!-- {{> shop/bottomPagination}} --}}
 {{> shop/footer}}
 {{> shop/scripts}}
