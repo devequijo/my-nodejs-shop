@@ -13,6 +13,10 @@
     <li class="list-group-item d-flex justify-content-between"><p class="p-0 m-0 flex-grow-1"><b>{{name}}<t>:</b>  {{description}}</t></p> 
     	<button type="button" onclick="location.href='edit/{{_id}}'" class="btn-success">EDIT</button>  <button onclick="location.href='/deleteItem/{{_id}}'" type="button" class="btn-danger">DELETE</button>
        <button type="button" onclick="$('#{{_id}}').removeClass('oculto')" class="btn-success">ADD IMAGES</button>
+        {{#if thumb}}
+        <img with='30' height='30' src="uploads/{{thumb}}"> {{/if}}
+        {{#if mainImag}}
+        <img with='40' height='40' src="uploads/{{mainImg}}">     {{/if}}   
         {{#each images}}
         
         <img with='20' height='20' src="uploads/{{this}}">

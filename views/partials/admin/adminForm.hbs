@@ -40,13 +40,13 @@
                     <span class="plus js-plus-icon"></span>
                     <div class="faq-answer">
                         {{#each categoria}}
-                       <ul class="list-group cProductsList">
+                       <ul id="catas" class="list-group cProductsList">
                            <li>{{cat}}</li>
                         </ul>
                         {{/each}}
 
                        <input type="text" name="categoria" id="categoria">
-                     <button type="button" id="addCat">Click me!</button>
+                     <button type="button" id="addCat">Добавить основную категорию</button>
 
                     </div>
                 </div>
@@ -67,4 +67,23 @@
  	
 <script>
  
+jQuery(document).ready(function($) {
+$("#addCat").on('click', (e)=>{
+    let categoria = $("#categoria").val()
+    e.preventDefault()
+    $.ajax
+    ({
+      type: "POST",
+      url: "addCat",
+      data: { newCategoria: categoria},
+      success: function (data) {
+        $('.result').html(data);
+        let a = $('#catas')
+        a.append('<ul id="catas" class="list-group cProductsList">'+categoria+'</ul>')
+        $('#categoria').empty()
+      }
+    });
+});
+})
+
 </script>

@@ -12,6 +12,16 @@ function checkAdmin(req,res,next){
   }
   res.redirect('/login')
 }
+router.post('/setMain', async (req, res)=>{
+  const item = await Items.findById(req.body.itemId)
+  console.log(item)
+  item.mainImage = req.body.mainImage
+  item.thumb = req.body.thumb
+  
+  await item.save()
+ 
+  res.redirect('/admin')
+})
 
 router.post('/addCat', async (req, res)=>{
   if(req.body.newCategoria){
@@ -52,15 +62,6 @@ router.post('/itemAdd', upload.array('file', 10) , async(req,res)=>{
 
 
 console.log(req.files)
-const images = new Promise((resolve, reject) => {
-  let images = []
-  for (i in req.files) {images.push(req.files[i].filename)}
-  console.log(images)
-  resolve(images)
-  
-});
-var newImages = []
-if (req.files) images.then(images=>{newImages.push(...images)})
 
 
   console.log(req.user)
@@ -71,8 +72,8 @@ if (req.files) images.then(images=>{newImages.push(...images)})
     categories:req.body.cat,
     description: req.body.description,
     price: req.body.price,
-    images: newImages,
-    mainImage: req.body.mainImage,
+    images: [],
+    mainImage: '',
     stock: req.body.stock,
     offer: req.body.offer,
     enabled: req.body.enabled,

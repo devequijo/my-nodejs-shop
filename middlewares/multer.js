@@ -5,13 +5,12 @@ const shortid = require('shortid')
 var storage = multer.diskStorage({
   destination: path.join(__dirname, '../static/uploads'),
   filename: function (req, file, cb) {
-    cb(null, shortid.generate())
-}
+    cb(null, shortid.generate())}
 })
 
 const upload = multer({
   limits: {
-    fileSize: 4 * 1024 * 1024
+    fileSize: 6 * 1024 * 1024
   }, storage: storage, 
 });
 

@@ -757,21 +757,6 @@ jQuery(document).ready(function($) {
 
 
 
-$("#addCat").on('click', (e)=>{
-    let categoria = $("#categoria").val()
-    e.preventDefault()
-    $.ajax
-    ({
-      type: "POST",
-      url: "addCat",
-      data: { newCategoria: categoria},
-      success: function (data) {
-        $('.result').html(data);
-       
-      }
-    });
-});
-
 
 
 
