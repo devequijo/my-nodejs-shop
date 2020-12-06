@@ -1,10 +1,11 @@
+const Tags = require('../models/Tag')
 const Cat = require('../models/Cat')
 const router = require('express').Router()
 const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
 const ResizeMain = require('../resize');
 const path = require('path')
-
+const shortid = require('shortid')
 function checkAdmin(req,res,next){
   if (req.isAuthenticated()) {
       if (req.user.isAdmin) return next()
@@ -13,13 +14,11 @@ function checkAdmin(req,res,next){
   res.redirect('/login')
 }
 router.post('/setMain', async (req, res)=>{
-  const item = await Items.findById(req.body.itemId)
+  const item = await Items.findOne({id:req.body.itemId})
   console.log(item)
   item.mainImage = req.body.mainImage
-  item.thumb = req.body.thumb
-  
-  await item.save()
- 
+  item.thumb = req.body.thumb  
+  await item.save() 
   res.redirect('/admin')
 })
 
@@ -28,8 +27,15 @@ router.post('/addCat', async (req, res)=>{
     const cat = new Cat({
       cat: req.body.newCategoria
     })
-    cat.save()
+    await cat.save()
     res.json(cat)
+  }
+  if(req.body.newTag) {
+    const tag = new Tags({
+      tag: req.body.newTag
+    })
+    await tag.save()
+    res.json(tag)
   }
 })
 router.get('/multiUpload', async (req, res)=>{
@@ -39,8 +45,8 @@ router.post('/multiUpload', upload.array("file", 10,), async (req, res)=>{
 
   if (!req.files) res.redirect(req.headers.referer)
   let upImages = []
- for(i in req.files) {await Items.findOneAndUpdate({_id: req.body.itemId}, {$push: {images: req.files[i].filename}})}
-  res.render('admin',{item:await Items.findById(req.body.itemId).lean(), aftherAddImage:true})
+ for(i in req.files) {await Items.findOneAndUpdate({id: req.body.itemId}, {$push: {images: req.files[i].filename}})}
+  res.render('admin',{item:await Items.findOne({id:req.body.itemId}).lean(), aftherAddImage:true})
 })
 router.post('/imageAdd', upload.single('image'), async function (req, res) {
   
@@ -51,7 +57,7 @@ router.post('/imageAdd', upload.single('image'), async function (req, res) {
   }
   const filename = await fileUpload.save(req.file.buffer);
   if (filename) {
-    let item = await Items.findOne({_id: req.body.itemId})
+    let item = await Items.findOne({id: req.body.itemId})
     item.mainImage = '/uploads/'+filename
     await item.save()
     console.log(filename)
@@ -66,9 +72,10 @@ console.log(req.files)
 
   console.log(req.user)
   const item = new Items({
-
+    id: shortid.generate(),
     name:req.body.name,
     thumb: req.body.thumb,
+    tags: req.body.tag,
     categories:req.body.cat,
     description: req.body.description,
     price: req.body.price,
@@ -96,14 +103,15 @@ res.render('admin', {allItems:items})
 
 })
 router.get('/deleteItem/:id', checkAdmin, async (req,res)=>{
-  await Items.findOneAndDelete({_id: req.params.id})
+  await Items.findOneAndDelete({id: req.params.id})
   console.log(req.params.id)
   res.redirect(req.headers.referer)
 })
 router.get('/admin', async (req,res)=>{
   let items = await Items.find().lean()
   let cat = await Cat.find().lean()
-  res.render('admin', {allItems:items, categoria: cat })
+  let tags = await Tags.find().lean()
+  res.render('admin', {allItems:items, categoria: cat, tags: tags })
   
 })
 

@@ -39,14 +39,22 @@
                 </a>
                     <span class="plus js-plus-icon"></span>
                     <div class="faq-answer">
-                        {{#each categoria}}
+                         
+                        
                        <ul id="catas" class="list-group cProductsList">
-                           <li>{{cat}}</li>
+                         {{#each categoria}}  <li>{{cat}}</li> {{/each}}
                         </ul>
-                        {{/each}}
+                        
 
-                       <input type="text" name="categoria" id="categoria">
+                       <input type="text" name="categoria" id="categoria" required>
                      <button type="button" id="addCat">Добавить основную категорию</button>
+
+
+                    
+                       <ul id="tags" class="list-group cProductsList">
+                        {{#each tags}}     <li>{{tag}}</li>  {{/each}}
+                        </ul>
+
 
                     </div>
                 </div>
@@ -79,7 +87,27 @@ $("#addCat").on('click', (e)=>{
       success: function (data) {
         $('.result').html(data);
         let a = $('#catas')
-        a.append('<ul id="catas" class="list-group cProductsList">'+categoria+'</ul>')
+        a.append('<li>'+categoria+'</li>')
+        $('#categoria').empty()
+      }
+    });
+});
+})
+
+
+jQuery(document).ready(function($) {
+$("#addCat").on('click', (e)=>{
+    let categoria = $("#categoria").val()
+    e.preventDefault()
+    $.ajax
+    ({
+      type: "POST",
+      url: "addCat",
+      data: { newCategoria: categoria},
+      success: function (data) {
+        $('.result').html(data);
+        let a = $('#catas')
+        a.append('<li>'+categoria+'</li>')
         $('#categoria').empty()
       }
     });

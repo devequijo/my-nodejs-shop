@@ -27,14 +27,13 @@ function validate(evt) {
                                       {{#each inCart}}
                                       <form id="{{id}}" action="removeItem" method="post">
                                       <input type="hidden" value="{{id}}" name="id">
-                                        <td class="produc-name"><a href="/view/{{_id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
+                                        <td class="produc-name"><a href="view/{{id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
                                             <div class="quantity input-group">
                                                 {{!-- <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field=""> --}}
                                                     {{!-- <span class="minus-icon">-</span> --}}
                                                 </button>
-                                                <input id="newCantidad" type="hidden" value="{{cantidad}}">
-                                                <input id="newId" type="hidden" value="{{id}}">
-                                                <input id="cantidad" onkeypress='validate(event)' type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js">
+                                               
+                                                <input id="{{id}}" onkeypress='validate(event)' onkeyup="update(this)" type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js">
                                                 {{!-- <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field=""> --}}
                                                     {{!-- <span class="plus-icon">+</span> --}}
                                                 </button>
@@ -48,5 +47,25 @@ function validate(evt) {
                                         </td>
                                     </tr><br></form>
                                {{/each}}
+<input id='user' type="hidden" value="{{usuario}}">
+<script>function update(ctx){
+console.log($('#user').value)
+   $.ajax({
+            url: '/cantidad',
+            type: 'post',
+            data:{
+                id:ctx.id,
+                cantidad:ctx.value},
+            success:function(){
+                
+            }
+        });
+
+
+}
+
+
+</script>
+
                                 </tbody>
                             </table>

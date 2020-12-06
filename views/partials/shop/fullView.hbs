@@ -11,22 +11,14 @@
                             </div>
                         </div>
                         <div class="multiple-img-list-ver2 js-click-product">
+                               {{#each item.images}}
                             <div class="product-col">
-                              {{#each item.images}}
+                           
                                 <div class="img active">
                                     <img src="uploads/{{this}}" alt="photo" class="img-reponsive">
-                                </div> {{/each}}
-                            </div>
-                            <div class="product-col">
-                                <div class="img">
-                                    <img src="img/bottle_3.jpg" alt="images" class="img-responsive">
-                                </div>
-                            </div>
-                            <div class="product-col">
-                                <div class="img">
-                                    <img src="img/bottle2.jpg" alt="images" class="img-responsive">
-                                </div>
-                            </div>
+                                </div> 
+                            </div>{{/each}}
+
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-7 col-md-6">
@@ -56,7 +48,7 @@
                                         <span class="plus-icon">+</span>
                                     </button>
                                 </div>
-                                <a href="#" class="link-ver1 add-cart">Add To Cart</a>
+                                <a href="/addToCart/{{_id}}/50" class="addcart">Add To Cart</a>
                                 <a href="#" class="link-ver1 wish"><i class="icon-heart f-15"></i></a>
                                 <div class="clearfix"></div>
                             </div>

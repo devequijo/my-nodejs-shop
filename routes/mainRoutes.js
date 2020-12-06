@@ -20,8 +20,9 @@ router.post('/removeItem', checkAuth, async (req, res)=>{
 })
 router.post('/cantidad', async (req, res)=>{    
 const test = await Users.findOne({'inCart.id': req.body.id})
-  const cart = await Users.findOneAndUpdate({'inCart.id' : 'jd1KLROua'},  { 'inCart.$.cantidad': req.body.cantidad })
-    console.log(test)
+  const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id},  { 'inCart.$.cantidad': req.body.cantidad }).then()
+
+
     res.json(test)
 })
 router.post('/addToCart', checkAuth, async (req,res)=>{
@@ -30,12 +31,12 @@ router.post('/addToCart', checkAuth, async (req,res)=>{
  
         let posibleCart = await Cart.findOne({usuario: req.user.login})
         if (posibleCart){
-            posibleCart.updateOne({ $push: { articulo: await Items.findOne({_id: req.body.id}).lean() } })
+            posibleCart.updateOne({ $push: { articulo: await Items.findOne({id: req.body.id}).lean() } })
         }
       else {
         let cart = new Cart({
             usuario : req.user.login,
-            articulo : await Items.findOne({_id: req.body.id}).lean(),
+            articulo : await Items.findOne({id: req.body.id}).lean(),
             cantidad : req.body.cantidad
         })
         console.log(cart)
@@ -49,8 +50,8 @@ router.post('/addToCart', checkAuth, async (req,res)=>{
 })
 router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
    if (!isNaN(parseInt(req.params.cantidad))){
-    const user = await Users.findById(req.user._id)
-    const item = await Items.findById(req.params.id)
+    const user = await Users.findOne({id:req.user.id})
+    const item = await Items.findOne({id:req.params.id})
     user.inCart.push({
         id: shortid.generate(),
         articulo: item,
@@ -76,15 +77,17 @@ router.get('/', async (req,res)=>{
      'inCart':inCart,
      'isAdmin':isAdmin, 
      'user':username}, )}, )
+
 router.get('/view/:id', async (req,res)=>{
-    let items = await Items.find().lean()
     if (req.user) {
         var inCart = await Cart.find({'usuario.login': req.user.login}).populate().lean()
     
     }
-    item = await Items.findOne({_id:req.params.id}).lean()
+    item = await Items.findOne({id:req.params.id}).lean()
     let username = (req.user) ? req.user.login : null
-    res.render('view', {'price':'inCart.articulo.price', 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'user':username})
+    let usuario = (req.user) ? req.user.id : null
+    if (!item) return res.send('i')
+    res.render('view', {'price':'inCart.articulo.price', 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'usuario':usuario, 'user':username})
 })    
 router.get('/login', (req,res)=>{ res.type('html').render('login')})
 router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol'}), (req,res)=>{ 
