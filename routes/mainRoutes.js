@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const Users = require('../models/User')
 const bcrypt = require('bcrypt')
-const shortid = require('shortid')
+const nanoid = require('nanoid')
 const passport = require('passport')
 const User = require('../models/User')
 const Cats = require('../models/Cat')
@@ -23,8 +23,8 @@ router.post('/cantidad', async (req, res)=>{
 const test = await Users.findOne({'inCart.id': req.body.id})
   const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id},  { 'inCart.$.cantidad': req.body.cantidad }).then()
 
-
-    res.json(test)
+a = await Users.find({"inCart.id": req.body.id}, {'inCart.$': 1});
+    res.json(a)
 })
 router.post('/addToCart', checkAuth, async (req,res)=>{
  
@@ -54,7 +54,7 @@ router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
     const user = await Users.findOne({id:req.user.id})
     const item = await Items.findOne({id:req.params.id})
     user.inCart.push({
-        id: shortid.generate(),
+        id: nanoid().slice(0,7),
         articulo: item,
         cantidad: req.params.cantidad,
         finalPrice: (item.price-(item.price*(item.offer/100)))
@@ -91,7 +91,9 @@ router.get('/view/:id', async (req,res)=>{
     if (!item) return res.send('i')
     res.render('view', {'price':'inCart.articulo.price','allItems':allItems, 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'usuario':usuario, 'user':username})
 })    
-router.get('/login', (req,res)=>{ res.type('html').render('login')})
+router.get('/login', (req,res)=>{ 
+    console.log(nanoid().slice(0,7))
+    res.type('html').render('login')})
 router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol'}), (req,res)=>{ 
     res.render('index')
     console.log(failureMessage)
@@ -120,7 +122,7 @@ router.post('/register',
             if (found.length > 0) return res.status(400).json({'message':'user exists'})
             else {
             let user = new User({
-                'id': shortid.generate(),
+                'id': nanoid().slice(0,7),
                 'email':req.body.email,
                 'login': req.body.login,
                 'password': hashPass,

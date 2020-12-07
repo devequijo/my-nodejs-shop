@@ -5,7 +5,7 @@ const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
 const ResizeMain = require('../resize');
 const path = require('path')
-const shortid = require('shortid')
+const nanoid = require('nanoid')
 function checkAdmin(req,res,next){
   if (req.isAuthenticated()) {
       if (req.user.isAdmin) return next()
@@ -65,7 +65,7 @@ router.post('/imageAdd', upload.single('image'), async function (req, res) {
 });
 router.post('/itemAdd', upload.array('file', 10) , async(req,res)=>{
   const item = new Items({
-    id: shortid.generate(),
+    id: nanoid().slice(0,7),
     name:req.body.name,
     thumb: req.body.thumb,
     tags: req.body.tag,

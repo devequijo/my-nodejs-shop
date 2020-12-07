@@ -1,11 +1,11 @@
 const multer = require('multer');
 const path = require('path');
-const shortid = require('shortid')
+const nanoid = require('nanoid')
 
 var storage = multer.diskStorage({
   destination: path.join(__dirname, '../static/uploads'),
   filename: function (req, file, cb) {
-    cb(null, shortid.generate())}
+    cb(null, nanoid().slice(0,7))}
 })
 
 const upload = multer({

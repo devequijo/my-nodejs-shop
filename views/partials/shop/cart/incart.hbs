@@ -25,7 +25,7 @@ function validate(evt) {
                                 <tbody>
                                     <tr class="item_cart">
                                       {{#each inCart}}
-                                      <form id="{{id}}" action="removeItem" method="post">
+                                      <form {{id}} action="removeItem" method="post">
                                       <input type="hidden" value="{{id}}" name="id">
                                         <td class="produc-name"><a href="view/{{id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
                                             <div class="quantity input-group">
@@ -33,7 +33,7 @@ function validate(evt) {
                                                     {{!-- <span class="minus-icon">-</span> --}}
                                                 </button>
                                                
-                                                <input id="{{id}}" onkeypress='validate(event)' onkeyup="update(this)" type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js">
+                                                <input id="{{id}}" onkeypress='validate(event)' onkeyup="update(this)" type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js ">
                                                 {{!-- <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field=""> --}}
                                                     {{!-- <span class="plus-icon">+</span> --}}
                                                 </button>
@@ -41,7 +41,7 @@ function validate(evt) {
                                         </td>
                                         <td class="total-price">
                                             <a style='margin-left:5e !important' class="remove" href="javascript:{}" onclick="document.getElementById('{{id}}').submit();"><i class="fas fa-trash-alt"></i></a>
-                                            <p class="price">
+                                            <p class="price {{id}}">
                                                 {{#calcPrice cantidad finalPrice}}{{/calcPrice}}€
                                             </p>
                                         </td>
@@ -56,8 +56,10 @@ console.log($('#user').value)
             data:{
                 id:ctx.id,
                 cantidad:ctx.value},
-            success:function(){
-                
+            success:function(data){
+               // let res = (cantidad*data[0].inCart[0].finalPrice)/50
+               console.log(data[0].inCart[0].id)
+             document.getElementsByClassName(data[0].inCart[0].id)[0].innerHTML=(data[0].inCart[0].cantidad*data[0].inCart[0].finalPrice)/50+'€'
             }
         });
 
