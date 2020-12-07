@@ -20,13 +20,14 @@
                             </span>
                         </div>
                     </div> --}}
-                    <div class="filter filter-category">
+                    <div style='' class="filter filter-category">
                         <h3 class="filtertitle">
-                            Categories.
+                           Te magico<i class="fas fa-leaf"></i> 
                         </h3>
-                        <ul class="filter-content js-filter-menu">
-                            <li><a href="">Outerwear</a></li>
-                            <li><a href="">Dresses</a>
+                        <ul  class="filter-content js-filter-menu">
+                            {{#each cats}}
+                            <li><a style="color:rgb(17, 150, 0); font-size:20px" href="">{{cat}}</a></li>{{/each}}
+                            {{!-- <li><a href="">Dresses</a>
                                 <span class="plus js-plus-icon"></span>
                                 <ul class="filter-menu">
                                     <li class=""><a href="#">Drop menu 1</a></li>
@@ -52,7 +53,7 @@
                                     <li class=""><a href="#">Drop menu 3</a></li>
                                 </ul>
                             </li>
-                            <li><a href="">Shoes</a></li>
+                            <li><a href="">Shoes</a></li> --}}
                         </ul>
                     </div>
                     <div class="filter filter-color">

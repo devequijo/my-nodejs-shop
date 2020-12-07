@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const shortid = require('shortid')
 const passport = require('passport')
 const User = require('../models/User')
+const Cats = require('../models/Cat')
 const Items = require('../models/Item')
 const Cart = require('../models/Cart')
 const {body, validationResult} = require('express-validator')
@@ -39,7 +40,7 @@ router.post('/addToCart', checkAuth, async (req,res)=>{
             articulo : await Items.findOne({id: req.body.id}).lean(),
             cantidad : req.body.cantidad
         })
-        console.log(cart)
+     
         await cart.save()
 
     }
@@ -67,7 +68,7 @@ router.get('/', async (req,res)=>{
     if (req.user) {
         var inCart = req.user.inCart
     }
-
+    let cats = await Cats.find().lean()
     let isAdmin = (req.user) ? req.user.isAdmin : null
     let username = (req.user) ? req.user.login : null
     res.type('html').render('index', 
@@ -75,19 +76,20 @@ router.get('/', async (req,res)=>{
      'title':'α✴Ω MagicTea.Shop ☥  || Compartimos magia contigo',
      'allItems':items,
      'inCart':inCart,
+     'cats':cats,
      'isAdmin':isAdmin, 
      'user':username}, )}, )
 
 router.get('/view/:id', async (req,res)=>{
     if (req.user) {
-        var inCart = await Cart.find({'usuario.login': req.user.login}).populate().lean()
-    
+        var inCart = req.user.inCart
     }
+    allItems = await Items.find()
     item = await Items.findOne({id:req.params.id}).lean()
     let username = (req.user) ? req.user.login : null
     let usuario = (req.user) ? req.user.id : null
     if (!item) return res.send('i')
-    res.render('view', {'price':'inCart.articulo.price', 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'usuario':usuario, 'user':username})
+    res.render('view', {'price':'inCart.articulo.price','allItems':allItems, 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'usuario':usuario, 'user':username})
 })    
 router.get('/login', (req,res)=>{ res.type('html').render('login')})
 router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol'}), (req,res)=>{ 

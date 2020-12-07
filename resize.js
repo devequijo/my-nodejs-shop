@@ -1,6 +1,6 @@
 const sharp = require('sharp');
 const path = require('path');
-const shortId = require('shortId')
+const nanoid = require('nanoid')
 class ResizeMain {
   constructor(folder) {
     this.folder = folder;
@@ -19,7 +19,7 @@ class ResizeMain {
     return filename;
   }
   static filename() {
-    return `${shortId.generate()}.png`;
+    return `${nanoid()}.png`;
   }
   filepath(filename) {
     return path.resolve(`${this.folder}/${filename}`)

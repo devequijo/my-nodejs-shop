@@ -47,14 +47,15 @@
                         
 
                        <input type="text" name="categoria" id="categoria" required>
-                     <button type="button" id="addCat">Добавить основную категорию</button>
-
+                     <button class="btn btn-success" type="button" id="addCat">Добавить основную категорию</button>
+<br><br><br>
 
                     
-                       <ul id="tags" class="list-group cProductsList">
-                        {{#each tags}}     <li>{{tag}}</li>  {{/each}}
-                        </ul>
-
+                       <div class="tags"><h3>
+                        {{#each tags}}&nbsp; {{tag}}, {{/each}}</h3> 
+                        </div><br><br>
+                        <input type="text" name="tag" id="tag" required>
+                     <button class="btn btn-success" type="button" id="addTag">Добавить тэг категорию</button>
 
                     </div>
                 </div>
@@ -92,26 +93,43 @@ $("#addCat").on('click', (e)=>{
       }
     });
 });
+
+
+
+
 })
 
 
+</script>
+
+
+
+<script>
+
+
 jQuery(document).ready(function($) {
-$("#addCat").on('click', (e)=>{
-    let categoria = $("#categoria").val()
+$("#addTag").on('click', (e)=>{
+    let tag = $("#tag").val()
     e.preventDefault()
     $.ajax
     ({
       type: "POST",
       url: "addCat",
-      data: { newCategoria: categoria},
+      data: { newTag: tag},
       success: function (data) {
         $('.result').html(data);
-        let a = $('#catas')
-        a.append('<li>'+categoria+'</li>')
-        $('#categoria').empty()
+        let a = $('#tags')
+        a.append(tag+', ')
+        document.getElementById('#tag').value=''
       }
     });
 });
+
+
+
+
 })
+
+
 
 </script>

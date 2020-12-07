@@ -15,7 +15,6 @@ function checkAdmin(req,res,next){
 }
 router.post('/setMain', async (req, res)=>{
   const item = await Items.findOne({id:req.body.itemId})
-  console.log(item)
   item.mainImage = req.body.mainImage
   item.thumb = req.body.thumb  
   await item.save() 
@@ -60,17 +59,11 @@ router.post('/imageAdd', upload.single('image'), async function (req, res) {
     let item = await Items.findOne({id: req.body.itemId})
     item.mainImage = '/uploads/'+filename
     await item.save()
-    console.log(filename)
+   
     res.redirect('/admin')
   }
 });
 router.post('/itemAdd', upload.array('file', 10) , async(req,res)=>{
-
-
-console.log(req.files)
-
-
-  console.log(req.user)
   const item = new Items({
     id: shortid.generate(),
     name:req.body.name,
@@ -91,7 +84,7 @@ console.log(req.files)
   })
  
  await item.save()
-console.log(item)
+
 //  if (req.files) {
 //   for(i in req.files) {await Items.findOneAndUpdate({_id: }, {$push: {images: req.files[i].filename}})}
 // }
@@ -104,7 +97,6 @@ res.render('admin', {allItems:items})
 })
 router.get('/deleteItem/:id', checkAdmin, async (req,res)=>{
   await Items.findOneAndDelete({id: req.params.id})
-  console.log(req.params.id)
   res.redirect(req.headers.referer)
 })
 router.get('/admin', async (req,res)=>{

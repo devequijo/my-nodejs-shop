@@ -5,9 +5,7 @@
                         <div class="product-images">
                             <div class="main-img js-product-slider">
                                 {{#each item.images}} <a href="#" class="hover-images effect"><img src="uploads/{{this}}" alt="photo" class="img-reponsive"></a> {{/each}}
-                                
-                                
-                              
+                                                  
                             </div>
                         </div>
                         <div class="multiple-img-list-ver2 js-click-product">
@@ -48,7 +46,7 @@
                                         <span class="plus-icon">+</span>
                                     </button>
                                 </div>
-                                <a href="/addToCart/{{_id}}/50" class="addcart">Add To Cart</a>
+                                <a href="#" class="link-ver1 add-cart">Add To Cart</a>
                                 <a href="#" class="link-ver1 wish"><i class="icon-heart f-15"></i></a>
                                 <div class="clearfix"></div>
                             </div>
@@ -132,8 +130,8 @@
         <!--single-product-tab-->
         <div class="information">
             <ul>
-                <li class="info-center text-center"><span>SKU :</span>
-                    <a href="">004004</a>
+                <li class="info-center text-center"><span>ID :</span>
+                    <a href="">{{id}}</a>
                 </li>
                 <li class="info-center bd-rl text-center"><span>Categories :</span>
                     <a href="">Hoodies</a>,
