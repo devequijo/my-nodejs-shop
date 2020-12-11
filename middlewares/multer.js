@@ -1,16 +1,16 @@
 const multer = require('multer');
 const path = require('path');
-const nanoid = require('nanoid')
+const {nanoid} = require('nanoid')
 
 var storage = multer.diskStorage({
   destination: path.join(__dirname, '../static/uploads'),
   filename: function (req, file, cb) {
-    cb(null, nanoid().slice(0,7))}
+    cb(null, nanoid().slice(0,7)+'.png')}
 })
 
 const upload = multer({
   limits: {
-    fileSize: 6 * 1024 * 1024
+    fileSize: 7 * 1024 * 1024
   }, storage: storage, 
 });
 

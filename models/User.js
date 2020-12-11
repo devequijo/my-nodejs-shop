@@ -6,7 +6,8 @@ const schema = new require('mongoose').Schema({
     lang: {type:String, default:'ES'},
     currency: {type:String, default:'EUR'},
     isAdmin: {type:Boolean, default:false},
-    inCart: [{type: require('mongoose').Schema.Types.Mixed, ref: require('./Cart')}]
+    inCart: [{type: require('mongoose').Schema.Types.Mixed, ref: require('./Cart')}],
+    created: Number
 })
 
 module.exports = require('mongoose').model('Users', schema)

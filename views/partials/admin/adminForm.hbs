@@ -1,4 +1,4 @@
-  <script type="text/javascript" src="/js/autofill.js"></script>
+
    <div class="container">
             <h2 class="faq-title text-center">Добро пожаловать в панель управления управления чайным складом!</h2>
             <div class="faq js-faq">
@@ -52,7 +52,7 @@
 
                     
                        <div class="tags"><h3>
-                        {{#each tags}}&nbsp; {{tag}}, {{/each}}</h3> 
+                        {{#each tags}}&nbsp; {{tag}}, <i id="{{tag}}" class="fas fa-trash-alt js-removeTag"></i> {{/each}}</h3> 
                         </div><br><br>
                         <input type="text" name="tag" id="tag" required>
                      <button class="btn btn-success" type="button" id="addTag">Добавить тэг категорию</button>
@@ -60,76 +60,15 @@
                     </div>
                 </div>
                 <div class="faq-content">
-                    <a href="" onClick="return false;" class="faq-quest">How To Order A Gift Card?
+                    <a href="" onClick="return false;" class="faq-quest">TestCart
                     
                 </a>
                     <span class="plus js-plus-icon"></span>
                     <div class="faq-answer">
-                        <p>Completely network high standards in innovation whereas goal-oriented paradigms. Intrinsicly morph human capital via enabled convergence. Objectively pursue leading-edge web-readiness before market-driven paradigms. Competently disseminate go forward "outside the box" thinking before proactive expertise. Quickly incubate effective schemas through future-proof users.</p>
-                        <p>Professionally initiate alternative metrics before high standards in synergy. Quickly enable orthogonal technology for enabled sources. Dramatically evisculate functional web services via emerging human capital. Synergistically promote high-payoff niches and client-based niches. Appropriately mesh technically sound processes vis-a-vis exceptional meta-services.
-                        </p>
-                        <p>Intrinsicly re-engineer standards compliant potentialities with business process improvements. Authoritatively reinvent cross-unit catalysts for change before high-quality outsourcing. Uniquely predominate technically sound web-readiness rather than cost effective solutions. Phosfluorescently synergize.</p>
+                
                     </div>
                 </div>
             </div>
         </div>
  	
-<script>
- 
-jQuery(document).ready(function($) {
-$("#addCat").on('click', (e)=>{
-    let categoria = $("#categoria").val()
-    e.preventDefault()
-    $.ajax
-    ({
-      type: "POST",
-      url: "addCat",
-      data: { newCategoria: categoria},
-      success: function (data) {
-        $('.result').html(data);
-        let a = $('#catas')
-        a.append('<li>'+categoria+'</li>')
-        $('#categoria').empty()
-      }
-    });
-});
 
-
-
-
-})
-
-
-</script>
-
-
-
-<script>
-
-
-jQuery(document).ready(function($) {
-$("#addTag").on('click', (e)=>{
-    let tag = $("#tag").val()
-    e.preventDefault()
-    $.ajax
-    ({
-      type: "POST",
-      url: "addCat",
-      data: { newTag: tag},
-      success: function (data) {
-        $('.result').html(data);
-        let a = $('#tags')
-        a.append(tag+', ')
-        document.getElementById('#tag').value=''
-      }
-    });
-});
-
-
-
-
-})
-
-
-
-</script>

@@ -1,21 +1,25 @@
    <!--push menu cart -->
     <div class="pushmenu pushmenu-left cart-box-container">
-        <div class="cart-list">
+        <div  class="cart-list list">
             <span class="close-left js-close">x</span>
             <h3 class="cart-title">Tu cesta de la compra</h3>
             {{#if inCart}}
+            <div class="cart-list list">
             {{>shop/cart/incart}}
+            </div>
+            <a href="/cart" class="btn-shop btn-arrow">Comprar ahora!</a>
            {{else}}
             <div class="nocart-list">
 
                 <div class="empty-cart">
-                    <h4 class="nocart-title">No products in the cart.</h4>
+                    <h4 class="nocart-title">Tu cesta esta vacia</h4>
                     <a href="" class="btn-shop btn-arrow">Start shopping</a>
                 </div>
 
                  {{/if}}
             </div>
             <div class="cart-bottom">
+                
                 <a href="#" class="text">Our Shipping & Return Policy</a>
             </div>
             <!-- End cart bottom -->

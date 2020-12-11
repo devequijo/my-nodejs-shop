@@ -33,20 +33,31 @@
                             </div> --}}
                             <h3 class="product-title"><a href="#">{{item.name}}</a></h3>
                             <div class="product-price">
-                                <span>{{item.price}}</span>
+                                <span>{{item.price}}€ por 50gr.</span> 
                             </div>
                             <p class="product-desc">{{item.description}}</p>
-                            <div class="action v3">
+                            <div class="action v3"><form action="addToCart">
+                                <input type="hidden" id="itemID" name="itemId" value="{{item.id}}">
                                 <div class="quantity">
                                     <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field="">
                                         <span class="minus-icon">-</span>
                                     </button>
-                                    <input type="text" name="number" value="50" class="product_quantity_number js-number">
+                                    <input class="product_quantity_number no_paste js-number" type="text" onkeypress="validate(event)" id="quant" name="number" value="50" >
+                                    </form>
                                     <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field="">
                                         <span class="plus-icon">+</span>
                                     </button>
                                 </div>
-                                <a href="#" class="link-ver1 add-cart">Add To Cart</a>
+                                <a id='add2cart' onClick="addToCart()" class="link-ver1 add-cart">Añadir al carrito</a>
+
+
+
+<script>
+  
+</script>
+
+
+
                                 <a href="#" class="link-ver1 wish"><i class="icon-heart f-15"></i></a>
                                 <div class="clearfix"></div>
                             </div>

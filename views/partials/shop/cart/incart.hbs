@@ -1,73 +1,39 @@
-<script>
 
-function validate(evt) {
-  var theEvent = evt || window.event;
-
-  // Handle paste
-  if (theEvent.type === 'paste') {
-      key = event.clipboardData.getData('text/plain');
-  } else {
-  // Handle key press
-      var key = theEvent.keyCode || theEvent.which;
-      key = String.fromCharCode(key);
-  }
-  var regex = /[0-9]|\./;
-  if( !regex.test(key) ) {
-    theEvent.returnValue = false;
-    if(theEvent.preventDefault) theEvent.preventDefault();
-  }
-}
-
-</script>
-
-<table><br>
+<table>
 
                                 <tbody>
                                     <tr class="item_cart">
+                                     
                                       {{#each inCart}}
-                                      <form {{id}} action="removeItem" method="post">
+                                      
+                                      <form id='{{id}}' action="/removeItem" method="post">
                                       <input type="hidden" value="{{id}}" name="id">
                                         <td class="produc-name"><a href="view/{{id}}" title="">&nbsp&nbsp{{articulo.name}}&nbsp&nbsp&nbsp&nbsp</a>
-                                            <div class="quantity input-group">
+                                           <br> <div class="quantity input-group">
                                                 {{!-- <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field=""> --}}
                                                     {{!-- <span class="minus-icon">-</span> --}}
-                                                </button>
+                                                {{!-- </button> --}}
                                                
-                                                <input id="{{id}}" onkeypress='validate(event)' onkeyup="update(this)" type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number js ">
+                                                <input id="{{id}}" onkeypress='validate(event)' onkeyup="update(this)" type="text" name="number" value="{{cantidad}}" class="product_quantity_number no_paste js-number js "> gr.
                                                 {{!-- <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field=""> --}}
                                                     {{!-- <span class="plus-icon">+</span> --}}
-                                                </button>
-                                            </div>
+                                                {{!-- </button>
+                                            </div> --}}
                                         </td>
                                         <td class="total-price">
+                                            
                                             <a style='margin-left:5e !important' class="remove" href="javascript:{}" onclick="document.getElementById('{{id}}').submit();"><i class="fas fa-trash-alt"></i></a>
                                             <p class="price {{id}}">
-                                                {{#calcPrice cantidad finalPrice}}{{/calcPrice}}€
+                                           {{#calcPrice cantidad finalPrice}}{{/calcPrice}}€     
                                             </p>
                                         </td>
-                                    </tr><br></form>
+                                    </tr></form></tbody>
                                {{/each}}
+                               
 <input id='user' type="hidden" value="{{usuario}}">
-<script>function update(ctx){
-console.log($('#user').value)
-   $.ajax({
-            url: '/cantidad',
-            type: 'post',
-            data:{
-                id:ctx.id,
-                cantidad:ctx.value},
-            success:function(data){
-               // let res = (cantidad*data[0].inCart[0].finalPrice)/50
-               console.log(data[0].inCart[0].id)
-             document.getElementsByClassName(data[0].inCart[0].id)[0].innerHTML=(data[0].inCart[0].cantidad*data[0].inCart[0].finalPrice)/50+'€'
-            }
-        });
 
-
-}
-
-
-</script>
 
                                 </tbody>
+                               
                             </table>
+                             

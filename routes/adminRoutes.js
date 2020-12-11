@@ -3,7 +3,6 @@ const Cat = require('../models/Cat')
 const router = require('express').Router()
 const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
-const ResizeMain = require('../resize');
 const path = require('path')
 const nanoid = require('nanoid')
 function checkAdmin(req,res,next){
@@ -44,28 +43,16 @@ router.post('/multiUpload', upload.array("file", 10,), async (req, res)=>{
 
   if (!req.files) res.redirect(req.headers.referer)
   let upImages = []
- for(i in req.files) {await Items.findOneAndUpdate({id: req.body.itemId}, {$push: {images: req.files[i].filename}})}
+ for(i in req.files) { 
+   console.log(req.body.itemId)
+   await Items.findOneAndUpdate({id: req.body.itemId}, {$push: {images: req.files[i].filename}}).then(data => console.log('f'+data))
+  }
   res.render('admin',{item:await Items.findOne({id:req.body.itemId}).lean(), aftherAddImage:true})
 })
-router.post('/imageAdd', upload.single('image'), async function (req, res) {
-  
-  const imagePath = path.join(__dirname, '../static/uploads');
-  const fileUpload = new ResizeMain(imagePath);
-  if (!req.file) {
-    res.status(401).json({error: 'Please provide an image'});
-  }
-  const filename = await fileUpload.save(req.file.buffer);
-  if (filename) {
-    let item = await Items.findOne({id: req.body.itemId})
-    item.mainImage = '/uploads/'+filename
-    await item.save()
-   
-    res.redirect('/admin')
-  }
-});
+
 router.post('/itemAdd', upload.array('file', 10) , async(req,res)=>{
   const item = new Items({
-    id: nanoid().slice(0,7),
+    id: await nanoid().slice(0,7),
     name:req.body.name,
     thumb: req.body.thumb,
     tags: req.body.tag,
@@ -103,7 +90,10 @@ router.get('/admin', async (req,res)=>{
   let items = await Items.find().lean()
   let cat = await Cat.find().lean()
   let tags = await Tags.find().lean()
-  res.render('admin', {allItems:items, categoria: cat, tags: tags })
+  if (req.user) {
+    var inCart = req.user.inCart
+}
+  res.render('admin', {allItems:items,inCart:inCart, categoria: cat, tags: tags })
   
 })
 

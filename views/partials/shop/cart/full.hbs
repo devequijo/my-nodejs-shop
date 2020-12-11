@@ -1,0 +1,118 @@
+
+
+  <div class="main-content">
+            <div class="cart-box-container-ver2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>Shopping Cart</h3>
+                            <table class="table cart-table space-30">
+                                <tbody>
+                                    <tr class="item_cart">
+                                        <td class="product-photo"><img src="img/cart/product_1.jpg" alt="Futurelife"></td>
+                                        <td class="produc-name"><a href="#">{{info}}1</a>
+                                            <div class="quantity input-group">
+                                                <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field="">
+                                                    <span class="minus-icon">-</span>
+                                                </button>
+                                                <input type="text" name="number" value='1' class="product_quantity_number js-number">
+                                                <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field="">
+                                                    <span class="plus-icon">+</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="total-price">
+                                            <a class="remove" href="#" title="">x</a>
+                                            <p class="price">$295.00</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="item_cart">
+                                        <td class="product-photo"><img src="img/cart/product_2.jpg" alt="Futurelife"></td>
+                                        <td class="produc-name"><a href="#" title="">Rose Gold Natural Band Watch</a>
+                                            <div class="quantity input-group">
+                                                <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field="">
+                                                    <span class="minus-icon">-</span>
+                                                </button>
+                                                <input type="text" name="number" value="1" class="product_quantity_number js-number">
+                                                <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field="">
+                                                    <span class="plus-icon">+</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="total-price">
+                                            <a class="remove" href="#" title="">x</a>
+                                            <p class="price">$295.00</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <a href="" class="btn link-button hover-black continue">Continue Shopping</a>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <a href="" class="btn link-button hover-black update">Update Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End contact-form -->
+                        <div class="col-md-4">
+                            <h3>Coupon</h3>
+                            <div class="contact-form coupon">
+                                <form class="">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-cart" id="inputfname" placeholder="Coupon Code">
+                                        <button value="Submit" class="btn link-button link-button-v2 hover-white color-red" type="submit">Apply coupon</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <h3>Cart Totals</h3>
+                            <div class="text-price">
+                                <ul>
+                                    <li><span class="text">Subtotal</span><span class="number">$560.00</span></li>
+                                    <li><span class="text">Shipping</span>
+                                        <div class="payment">
+                                            <form action="#">
+                                                <input type="radio" name="gender" value="Flat" id="radio1" checked="checked">
+                                                <label for="radio1">Free Shipping</label>
+                                                <input type="radio" name="gender" value="Free" id="radio2">
+                                                <label for="radio2">Standard <span class="number">$20.00</span></label>
+                                                <input type="radio" name="gender" value="Delivery" id="radio3">
+                                                <label for="radio3">Local Pickup</label>
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <li><span class="text calculate">Calculate shipping</span>
+                                        <form class="zipcode" action="#">
+                                            <input type="text" class="form-control input-cart" placeholder="Zipcode">
+                                        </form>
+                                    </li>
+                                    <li><span class="text">Totals</span><span class="number">$89.00</span></li>
+                                </ul>
+                            </div>
+                            <a class="btn link-button hover-white checkout" href="#" title="Proceed to checkout">Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End container -->
+            </div>
+            <!-- End cat-box-container -->
+        </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <script>
+     let App = Vue.createApp({
+          data:()=>({
+            info:'k'           
+          }),
+          mounted() {
+    axios
+      .get('/all')
+      .then(response => {
+
+          console.log(response.data.user.inCart)
+          });
+  }
+      })
+      App.mount('.main-content')
+
+  </script>

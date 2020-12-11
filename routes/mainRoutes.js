@@ -15,6 +15,20 @@ function checkAuth(req,res,next){
     res.redirect('/login')
 }
 
+router.get('/cart', async (req, res)=>{
+    res.render('cart')
+})
+
+router.get('/all', async (req,res)=>{
+    res.json({ 
+        user:req.isAuthenticated?req.user:null,
+        items:await Items.find(),
+
+    })
+})
+
+
+
 router.post('/removeItem', checkAuth, async (req, res)=>{
     const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id}, { $pull: { inCart: { id: req.body.id } } })
     res.redirect(req.headers.referer)
@@ -27,28 +41,20 @@ a = await Users.find({"inCart.id": req.body.id}, {'inCart.$': 1});
     res.json(a)
 })
 router.post('/addToCart', checkAuth, async (req,res)=>{
- 
-    try {
- 
-        let posibleCart = await Cart.findOne({usuario: req.user.login})
-        if (posibleCart){
-            posibleCart.updateOne({ $push: { articulo: await Items.findOne({id: req.body.id}).lean() } })
-        }
-      else {
-        let cart = new Cart({
-            usuario : req.user.login,
-            articulo : await Items.findOne({id: req.body.id}).lean(),
-            cantidad : req.body.cantidad
-        })
-     
-        await cart.save()
-
+    if (!isNaN(parseInt(req.body.cantidad))){
+        const user = await Users.findOne({id:req.user.id})
+        const item = await Items.findOne({id:req.body.id})
+        user.inCart.push({
+            id: nanoid().slice(0,7),
+            articulo: item,
+            cantidad: req.body.cantidad,
+            finalPrice: (item.price-(item.price*(item.offer/100)))
+       } )
+    
+        await user.save()
+        res.redirect('#')} else {res.json({'message':'fuck u'})
     }
-        res.redirect(req.headers.referer)
-    }
-    catch (e) {console.log(e)}
-
-})
+ })
 router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
    if (!isNaN(parseInt(req.params.cantidad))){
     const user = await Users.findOne({id:req.user.id})
@@ -126,6 +132,7 @@ router.post('/register',
                 'email':req.body.email,
                 'login': req.body.login,
                 'password': hashPass,
+                'created': Date.now()
                 })
                 user.save().then(()=>{res.redirect('/?created=' + 'true',)})
                 
