@@ -1,26 +1,18 @@
+const {checkAdmin, setMain, handeUploaded} = require('./getLogic')
 const Tags = require('../models/Tag')
 const Cat = require('../models/Cat')
 const router = require('express').Router()
 const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
 const path = require('path')
-const nanoid = require('nanoid')
-function checkAdmin(req,res,next){
-  if (req.isAuthenticated()) {
-      if (req.user.isAdmin) return next()
-      else {res.send('no admin bleat')}
-  }
-  res.redirect('/login')
-}
-router.post('/setMain', async (req, res)=>{
-  const item = await Items.findOne({id:req.body.itemId})
-  item.mainImage = req.body.mainImage
-  item.thumb = req.body.thumb  
-  await item.save() 
+const {nanoid} = require('nanoid')
+
+router.post('/setMain', checkAdmin, setMain, async (req, res)=>{
   res.redirect('/admin')
 })
 
 router.post('/addCat', async (req, res)=>{
+
   if(req.body.newCategoria){
     const cat = new Cat({
       cat: req.body.newCategoria
@@ -36,17 +28,8 @@ router.post('/addCat', async (req, res)=>{
     res.json(tag)
   }
 })
-router.get('/multiUpload', async (req, res)=>{
-  res.render('admin',{item:await Items.findById('5fc9965af547ae122c486329').lean(), aftherAddImage:true})
-})
-router.post('/multiUpload', upload.array("file", 10,), async (req, res)=>{
 
-  if (!req.files) res.redirect(req.headers.referer)
-  let upImages = []
- for(i in req.files) { 
-   console.log(req.body.itemId)
-   await Items.findOneAndUpdate({id: req.body.itemId}, {$push: {images: req.files[i].filename}}).then(data => console.log('f'+data))
-  }
+router.post('/multiUpload', upload.array("file", 10), handeUploaded, async (req, res)=>{
   res.render('admin',{item:await Items.findOne({id:req.body.itemId}).lean(), aftherAddImage:true})
 })
 
@@ -82,11 +65,11 @@ let items = await Items.find().lean()
 res.render('admin', {allItems:items})
 
 })
-router.get('/deleteItem/:id', checkAdmin, async (req,res)=>{
+router.get('/deleteItem/:id', checkAdmin,  async (req,res)=>{
   await Items.findOneAndDelete({id: req.params.id})
   res.redirect(req.headers.referer)
 })
-router.get('/admin', async (req,res)=>{
+router.get('/admin', checkAdmin, async (req,res)=>{
   let items = await Items.find().lean()
   let cat = await Cat.find().lean()
   let tags = await Tags.find().lean()

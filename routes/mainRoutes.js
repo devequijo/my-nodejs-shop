@@ -1,33 +1,20 @@
+const {getCommonData, checkAuth} = require('./getLogic')
+
 const router = require('express').Router()
 const Users = require('../models/User')
 const bcrypt = require('bcrypt')
 const {nanoid} = require('nanoid')
 const passport = require('passport')
 const User = require('../models/User')
-const Cats = require('../models/Cat')
 const Items = require('../models/Item')
 const {body, validationResult} = require('express-validator')
-function checkAuth(req,res,next){
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/login')
-}
 
-async function showCats(){
-cats=[]
 
-    let todas = await Cats.find()
-    for( let i = 0; i< todas.length; i++)
-        {
-            let item = await Items.find({"categories" : todas[i].cat}, {"categories.$" : 1})
-            if (item.length>0) {
-                cats.push(todas[i].cat)
-                }
-            }
-        console.log(cats)
-        return cats 
-}
+router.get('/', async (req,res)=>{  
+    res.type('html').render('index', await getCommonData(req) )})
+
+
+
 
 
 router.get('/cart', async (req, res)=>{
@@ -43,8 +30,9 @@ router.get('/all', async (req,res)=>{
 })
 
 router.get('/cat/:id', async (req, res)=>{
- 
-    showCats()
+    items = await Items.find({"categories" : req.params.id}).lean()
+    req.customGet={'allItems':items}
+    res.render('index', await getCommonData(req))
 })
 
 router.post('/removeItem', checkAuth, async (req, res)=>{
@@ -87,24 +75,7 @@ router.get('/addToCart/:id/:cantidad', checkAuth, async (req,res)=>{
     await user.save()
     res.redirect(req.headers.referer)} else {res.json({'message':'fuck u'})
 }})
-router.get('/', async (req,res)=>{
-    let items = await Items.find().lean()
-    if (req.user) {
-        var inCart = req.user.inCart
-    }
-    let showcat = await showCats()
-    console.log(showcat)
-    let cats = await Cats.find().lean()
-    let isAdmin = (req.user) ? req.user.isAdmin : null
-    let username = (req.user) ? req.user.login : null
-    res.type('html').render('index', 
-    {'price':'inCart.articulo.price',
-     'title':'α✴Ω MagicTea.Shop ☥  || Compartimos magia contigo',
-     'allItems':items.reverse(),
-     'inCart':inCart,
-     'cats': showcat,
-     'isAdmin':isAdmin, 
-     'user':username}, )}, )
+
 
 router.get('/view/:id', async (req,res)=>{
     if (req.user) {
@@ -118,13 +89,12 @@ router.get('/view/:id', async (req,res)=>{
     res.render('view', {'price':'inCart.articulo.price','allItems':allItems, 'title':'α✴Ω MagicTea.Shop  || Compartimos magia contigo'+item.name,'item':item,'inCart':inCart, 'usuario':usuario, 'user':username})
 })    
 router.get('/login', (req,res)=>{ 
-    console.log(nanoid().slice(0,7))
     res.type('html').render('login')})
 router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol'}), (req,res)=>{ 
     res.render('index')
     console.log(failureMessage)
 })
-router.get('/register',  (req,res)=>{ console.log(res.body)
+router.get('/register',  (req,res)=>{ 
     res.type('html').render('register')})
 router.post('/register',
 [
@@ -144,7 +114,6 @@ router.post('/register',
 
         const hashPass = await bcrypt.hash(req.body.password,10)     
          await Users.find({login: req.body.login}).then((found)=>{
-            console.log(found)
             if (found.length > 0) return res.status(400).json({'message':'user exists'})
             else {
             let user = new User({

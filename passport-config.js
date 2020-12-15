@@ -24,7 +24,6 @@ function initialize (passport){
     })
     passport.deserializeUser((id,done)=>{
         Users.findOne({id:id}).then(User=>{
-            console.log(User)
             done(null, User);
            
           });

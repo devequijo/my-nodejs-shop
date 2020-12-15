@@ -18,7 +18,7 @@ app.use(adminRoutes)
 
 
 app.get('*', function(req, res){
-    res.status(404).redirect(req.headers.referer)
+   res.redirect(req.headers.referer)
   });
 
 
