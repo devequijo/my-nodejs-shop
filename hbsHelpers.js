@@ -4,6 +4,7 @@ module.exports = {
     {
         let res = (cantidad*prceioFinal)/50
         return res.toFixed(2)
+    
     }, 
 
     cartLimit : (inCart)=>{

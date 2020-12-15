@@ -1,12 +1,11 @@
 const router = require('express').Router()
 const Users = require('../models/User')
 const bcrypt = require('bcrypt')
-const nanoid = require('nanoid')
+const {nanoid} = require('nanoid')
 const passport = require('passport')
 const User = require('../models/User')
 const Cats = require('../models/Cat')
 const Items = require('../models/Item')
-const Cart = require('../models/Cart')
 const {body, validationResult} = require('express-validator')
 function checkAuth(req,res,next){
     if (req.isAuthenticated()) {
@@ -14,6 +13,22 @@ function checkAuth(req,res,next){
     }
     res.redirect('/login')
 }
+
+async function showCats(){
+cats=[]
+
+    let todas = await Cats.find()
+    for( let i = 0; i< todas.length; i++)
+        {
+            let item = await Items.find({"categories" : todas[i].cat}, {"categories.$" : 1})
+            if (item.length>0) {
+                cats.push(todas[i].cat)
+                }
+            }
+        console.log(cats)
+        return cats 
+}
+
 
 router.get('/cart', async (req, res)=>{
     res.render('cart')
@@ -27,7 +42,10 @@ router.get('/all', async (req,res)=>{
     })
 })
 
-
+router.get('/cat/:id', async (req, res)=>{
+ 
+    showCats()
+})
 
 router.post('/removeItem', checkAuth, async (req, res)=>{
     const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id}, { $pull: { inCart: { id: req.body.id } } })
@@ -74,15 +92,17 @@ router.get('/', async (req,res)=>{
     if (req.user) {
         var inCart = req.user.inCart
     }
+    let showcat = await showCats()
+    console.log(showcat)
     let cats = await Cats.find().lean()
     let isAdmin = (req.user) ? req.user.isAdmin : null
     let username = (req.user) ? req.user.login : null
     res.type('html').render('index', 
     {'price':'inCart.articulo.price',
      'title':'α✴Ω MagicTea.Shop ☥  || Compartimos magia contigo',
-     'allItems':items,
+     'allItems':items.reverse(),
      'inCart':inCart,
-     'cats':cats,
+     'cats': showcat,
      'isAdmin':isAdmin, 
      'user':username}, )}, )
 
@@ -90,7 +110,7 @@ router.get('/view/:id', async (req,res)=>{
     if (req.user) {
         var inCart = req.user.inCart
     }
-    allItems = await Items.find()
+    allItems = await Items.find().lean()
     item = await Items.findOne({id:req.params.id}).lean()
     let username = (req.user) ? req.user.login : null
     let usuario = (req.user) ? req.user.id : null

@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8">
-                            <h3>Shopping Cart</h3>
+                            <h3>Tu cesta de la compra:</h3>
                             <table class="table cart-table space-30">
                                 <tbody>
                                     <tr class="item_cart">
@@ -98,21 +98,5 @@
             </div>
             <!-- End cat-box-container -->
         </div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-          <script>
-     let App = Vue.createApp({
-          data:()=>({
-            info:'k'           
-          }),
-          mounted() {
-    axios
-      .get('/all')
-      .then(response => {
 
-          console.log(response.data.user.inCart)
-          });
-  }
-      })
-      App.mount('.main-content')
-
-  </script>
+    

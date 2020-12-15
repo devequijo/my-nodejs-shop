@@ -96,9 +96,7 @@ jQuery(document).ready(function($) {
           url: "addCat",
           data: { newTag: tag},
           success: function (data) {
-            $('.result').html(data);
-            let a = $('#tags')
-            a.append(tag+', ')
+            $('.tag').append( ` ${tag}, <i id="${tag}" class="fas fa-trash-alt js-removeTag"></i>`); 
            // document.getElementById('#tag').value=''
           }
         });

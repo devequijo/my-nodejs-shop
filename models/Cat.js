@@ -5,3 +5,4 @@ subCat:Array
 
 })
 module.exports=mongoose.model('Cat', schema)
+

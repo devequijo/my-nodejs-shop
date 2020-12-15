@@ -1,0 +1,40 @@
+
+     <div class="product-related">
+            <div class="container container-42">
+                <h3 class="title text-center">Productos de interes:</h3>
+                <div class="owl-carousel owl-theme js-owl-product">
+                    {{#each allItems}}
+                    <div class="product-item">
+                        <div class="product-images">
+                            <a href="view/{{id}}" class="hover-images effect"><img src="uploads/{{thumb}}" alt="products" class="img-reponsive"></a>
+                            {{!-- <a href="#" class="btn-add-wishlist ver2"><i class="icon-heart"></i></a> --}}
+                                        {{#if newOne}}
+                                        <div class="ribbon-new ver2"><span>new</span></div>
+                                       {{/if}}
+                                       {{#if offer}}
+                                        <div class="ribbon-sale ver2"><span>-{{offer}}%</span></div>
+                                        {{/if}}
+                            <a href="#" class="btn-quickview">Ver detalles</a>
+                        </div>
+                        <div class="product-info-ver2">
+                            <h3 class="product-title"><a href="#">{{name}}</a></h3>
+                            <div class="product-after-switch">
+                                <div class="product-price">{{price}}</div>
+                                <div class="product-after-button">
+                                    <a href="/addToCart/{{id}}/10" class="addcart">Añadir al carrito (10gr)</a>
+                                </div>
+                            </div>
+                            <div class="rating-star">
+                                <span class="star star-5"></span>
+                                <span class="star star-4"></span>
+                                <span class="star star-3"></span>
+                                <span class="star star-2"></span>
+                                <span class="star star-1"></span>
+                            </div>
+                            <div class="product-price">$292.00</div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
