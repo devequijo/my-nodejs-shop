@@ -1,0 +1,87 @@
+
+
+   <form  style="margin-left:100px;margin-right:100px;" method="post" action="itemAdd" enctype="multipart/form-data">
+        <div  class="form-group row">
+            <div class="form-group">
+            <label class="col-sm-2 col-form-label">Редактирование товара</label>
+
+
+
+
+ {{!-- {{> admin/showItems}} --}}
+
+            <input type="text" class="form-control" name="name" value="{{item.name}}" ><br>
+        <label for="thumb">Название картинки.</label>   <button type="button" class="btn btn-secondary">Редактировать</button>
+            <input type="text" class="form-control" id="thumb" name="thumb" value="{{item.thumb}}" placeholder="URL миниатюрной картинки"><br>
+       
+        <label for="price">Цена за 50 грамм</label>   
+            <input type="text" class="form-control" id="price" name="price" value="{{item.price}}" placeholder="Цена в евро за 50 грамм">
+        <label for="stock">Остаток</label>
+             <input type="text" class="form-control" id="" name="stock" value="{{item.stock}}" placeholder="Остаток">
+        </div>
+
+
+
+
+                        <label for="exampleFormControlTextarea1">Описание продукта</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3">{{item.description}}</textarea>
+                    </div>
+                                        <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Основная категория товара.</legend>
+                         {{item.categories}}&nbsp&nbsp <button onClick="changeCat()" class="btn btn-secondary">Изменить</button>
+
+     
+                         <select disabled="true" id="cat" name="cat">
+                        {{#each categoria}}  <option value="{{cat}}"> {{cat}} </option>  {{#each subCat}}  <option value="{{this}}"> << {{this}} </option> {{/each}} {{/each}}
+                      
+                    </option></select></div>
+
+                    
+
+                  
+ 
+                            
+
+
+
+                    <div  class="form-group row">
+                        <div class="col-sm-2">Параметры отображения</div>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" checked>
+                                <label class="form-check-label" for="gridCheck1">
+                                    Купить с шагом 50 гр
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" checked>
+                                <label class="form-check-label" for="gridCheck1">
+                                Показывать в рекомандуемых&nbsp; </label>
+                            </div>
+                          <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1">
+                              <label class="form-check-label" for="gridCheck1">
+                              Новинка&nbsp; </label>
+                            </div>
+                          <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1">
+                              <label for="textfield">Скидка:</label>
+                                <input type="text" name="textfield" id="textfield">
+                              <label class="form-check-label" for="gridCheck1">
+                              %&nbsp;&nbsp; </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Обновить выбраный товар</button>
+                        </div>
+                    </div>
+                </form>
+
+<script>
+    function changeCat(){
+        $("#cat").prop('disabled', false)
+    }
+</script>

@@ -1,4 +1,4 @@
-const {checkAdmin, setMain, handeUploaded} = require('./getLogic')
+const {checkAdmin, setMain, handeUploaded, getCommonData} = require('./getLogic')
 const Tags = require('../models/Tag')
 const Cat = require('../models/Cat')
 const router = require('express').Router()
@@ -6,6 +6,13 @@ const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
 const path = require('path')
 const {nanoid} = require('nanoid')
+
+router.get('/edit/:id',  async (req, res)=>{
+  item = await Items.findOne({id:req.params.id}).lean()
+  let cat = await Cat.find().lean()
+  req.customGet = {edit:true, item:item, categoria:cat}
+  res.render('admin', await getCommonData(req))
+})
 
 router.post('/setMain', checkAdmin, setMain, async (req, res)=>{
   res.redirect('/admin')

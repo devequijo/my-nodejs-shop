@@ -16,6 +16,7 @@ const itemSchema = new mongoose.Schema({
     offer: {type: Number, default: null},
     rating: Number,
     enabled: Boolean,
+    inStock: Boolean,
     newOne: Boolean,
     isRecomended: Boolean,
     thumb: String,

@@ -9,8 +9,12 @@
 {{#if aftherAddImage}}
 {{>admin/aftherAddImage}}
 {{else}}
+{{#if edit}}<br>
+{{> admin/editItem}}
+{{/if}}
 {{> admin/adminForm}}
 {{/if}}
+
 {{!-- {{> shop/bottomPagination}} --}}
 {{> shop/footer}}
 {{> shop/scripts}}

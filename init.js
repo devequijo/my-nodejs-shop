@@ -1,3 +1,4 @@
+const flash = require('express-flash')
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
@@ -13,7 +14,7 @@ const hbs = expHbs.create({
     extname:'hbs', 
     helpers: require('./hbsHelpers.js')
 })
-
+app.use(flash())
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
@@ -21,6 +22,7 @@ app.use(express.static('static'));
 app.use('/view/', express.static('static') )
 app.use('/addImages/', express.static('static') )
 app.use('/cat/', express.static('static') )
+app.use('/edit/', express.static('static') )
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())

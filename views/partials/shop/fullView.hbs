@@ -43,7 +43,10 @@
                             <div class="product-price">
                                 <span>{{item.price}}€ por 50gr.</span> 
                             </div>
-                            <p class="product-desc">{{item.description}}</p>
+                           
+                            <p class="product-desc"> {{#unless item.inStock}}
+                            <div class="alert alert-danger"> Producto temporalmente agotado.</div>
+                            {{/unless}}{{item.description}}</p>
                             <div class="action v3"><form action="addToCart">
                                 <input type="hidden" id="itemID" name="itemId" value="{{item.id}}">
                                 <div class="quantity">
@@ -56,8 +59,14 @@
                                         <span class="plus-icon">+</span>
                                     </button>
                                 </div>
+                                {{#if user}}
                                 <a id='add2cart' onClick="addToCart()" class="link-ver1 add-cart">Añadir al carrito</a>
-
+                                {{else}}
+                                
+                                 <div class="clearfix"></div>
+                            </div>
+                                 <div class="alert alert-warning">Para comprar este producto <a href='/login'>inicie la sesion </a>o <a href='/register'>registre una cuenta</a></div>
+                                {{/if}}
 
 
 <script>
@@ -66,9 +75,8 @@
 
 
 
-                                <a href="#" class="link-ver1 wish"><i class="icon-heart f-15"></i></a>
-                                <div class="clearfix"></div>
-                            </div>
+                                {{!-- <a href="#" class="link-ver1 wish"><i class="icon-heart f-15"></i></a> --}}
+                               
                             <div class="share-social">
                                 <span>Share :</span>
                                 <a href="#"><i class="fa fa-twitter"></i></a>

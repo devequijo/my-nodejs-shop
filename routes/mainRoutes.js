@@ -8,20 +8,23 @@ const passport = require('passport')
 const User = require('../models/User')
 const Items = require('../models/Item')
 const {body, validationResult} = require('express-validator')
+const flash = require('express-flash')
 
 
-router.get('/', async (req,res)=>{  
+router.get('/', async (req,res)=>{  console.log('rere')
     res.type('html').render('index', await getCommonData(req) )})
 
 
 
 
 
-router.get('/cart', async (req, res)=>{
-    res.render('cart')
+router.get('/cart', checkAuth, async (req, res)=>{
+    // let data = getCommonData()
+    // ;(await data).inCart.reduce(data=>{})
+    res.render('cart', await getCommonData(req))
 })
 
-router.get('/all', async (req,res)=>{
+router.get('*/all', async (req,res)=>{
     res.json({ 
         user:req.isAuthenticated?req.user:null,
         items:await Items.find(),
@@ -29,11 +32,19 @@ router.get('/all', async (req,res)=>{
     })
 })
 
+router.get('/cat/t?:id', async (req, res)=>{
+    items = await Items.find({"tags" : req.params.id}).lean()
+    if (items.length>0) req.customGet={'allItems':items}  
+    res.render('index', await getCommonData(req))
+    console.log(req.params.id)
+})
+
 router.get('/cat/:id', async (req, res)=>{
     items = await Items.find({"categories" : req.params.id}).lean()
-    req.customGet={'allItems':items}
+    if (items.length>0) req.customGet={'allItems':items}  
     res.render('index', await getCommonData(req))
 })
+
 
 router.post('/removeItem', checkAuth, async (req, res)=>{
     const cart = await Users.findOneAndUpdate({'inCart.id' : req.body.id}, { $pull: { inCart: { id: req.body.id } } })
@@ -90,9 +101,10 @@ router.get('/view/:id', async (req,res)=>{
 })    
 router.get('/login', (req,res)=>{ 
     res.type('html').render('login')})
-router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol'}), (req,res)=>{ 
-    res.render('index')
-    console.log(failureMessage)
+router.post('/login', passport.authenticate('local',{successRedirect:'/', failureRedirect:'/login', failureMessage:'Lol', failureFlash:true}), (req,res)=>{ 
+    console.log(flash)  
+    res.render('index', {message: 'lol'})
+
 })
 router.get('/register',  (req,res)=>{ 
     res.type('html').render('register')})
@@ -123,15 +135,13 @@ router.post('/register',
                 'password': hashPass,
                 'created': Date.now()
                 })
-                user.save().then(()=>{res.redirect('/?created=' + 'true',)})
+                user.save().then(()=>{res.redirect('/login?created=' + 'true',)})
                 
             }
         })
 
         }
-        
-    
-    catch(e){}
+     catch(e){}
 })
 router.get('/logout', function(req, res){
     req.logout();
