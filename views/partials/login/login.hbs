@@ -10,6 +10,8 @@
                                 {{/each}}
                                 <h3>Mi perfil magico</h3>
                             </div>
+                            {{#if mensaje}}
+                            <div class="alert alert-danger">{{mensaje}}</div>{{/if}}
                             <form method="post" action="/login" class="form-customer form-login">
                                 <div class="form-group">
                                     <label for="Login">Nombre de usuario *</label>

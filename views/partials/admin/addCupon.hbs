@@ -1,0 +1,23 @@
+<div class="cupon">
+  <form method="post" action="addCupon">
+
+         <label for="name">Название купона:</label> 
+            <input type="text" class="form-control" name="name"  ><br>
+        <label for="cuponCode">Код купона:</label> 
+            <input type="text" class="form-control" id="cuponCode" name="code"  placeholder="Оставить пустым для генерации случайного значения из 7 знаков"><br>
+        <label for="cuponType">Назначение купона:</label>   
+           
+               <select id="cat" name="cuponType">
+                   <option value="once"> Единовременная скидка. % </option>
+                   <option value="giftCard"> Подарочная карта. $$$</option>
+                   <option value="permanent"> Постоянная скидка. %</option>
+                   <option value="reference"> Партнёрское зачисление. $</option>
+               </select>
+            <br>
+       <br>
+             <input type="text" class="form-control" id="" name="amount" placeholder="Величина скидки">
+             <input type="text" class="form-control" name="quantity" placeholder="Количество купонов">
+        </div>
+                  <br><br>
+<button type="submit"class="btn btn-primary">Отправить</button>
+    </form></div>

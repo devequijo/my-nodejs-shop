@@ -1,4 +1,4 @@
-const {getCommonData, checkAuth} = require('./getLogic')
+const {getCommonData, applyCupon, checkAuth} = require('./getLogic')
 
 const router = require('express').Router()
 const Users = require('../models/User')
@@ -16,11 +16,21 @@ router.get('/', async (req,res)=>{  console.log('rere')
 
 
 
-
+router.post('/applyCupon', checkAuth, applyCupon, async (req, res)=>{
+    
+    if(req.cupon) res.redirect('/cart')
+    else {
+        req.customGet={mensaje:"El codigo del cupon introducido es erroneo!"}
+        res.render('cart', await getCommonData(req))
+    }
+})
+router.get('/noCupon', checkAuth, async (req, res)=>{
+    await User.findOneAndUpdate({id:req.user.id}, {cupon:''})
+    res.redirect('/cart')
+})
 
 router.get('/cart', checkAuth, async (req, res)=>{
-    // let data = getCommonData()
-    // ;(await data).inCart.reduce(data=>{})
+
     res.render('cart', await getCommonData(req))
 })
 
@@ -133,7 +143,8 @@ router.post('/register',
                 'email':req.body.email,
                 'login': req.body.login,
                 'password': hashPass,
-                'created': Date.now()
+                'created': Date.now(),
+                'inviteCode': nanoid().slice(0.7)
                 })
                 user.save().then(()=>{res.redirect('/login?created=' + 'true',)})
                 

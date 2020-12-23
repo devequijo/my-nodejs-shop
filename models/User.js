@@ -25,7 +25,10 @@ const schema = new require('mongoose').Schema({
     isAdmin: {type:Boolean, default:false},
     inCart: [{type: require('mongoose').Schema.Types.Mixed, ref: require('./Cart')}],
     created: Number,
-    datos: [userInfoSchema]
+    datos: [userInfoSchema],
+    referer:String,
+    inviteCode: String,
+    cupon: String
 })
 
 module.exports = require('mongoose').model('Users', schema)

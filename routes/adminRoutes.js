@@ -1,4 +1,4 @@
-const {checkAdmin, setMain, handeUploaded, getCommonData} = require('./getLogic')
+const {checkAdmin, setMain, handeUploaded, getCommonData, deleteImg, createCupon} = require('./getLogic')
 const Tags = require('../models/Tag')
 const Cat = require('../models/Cat')
 const router = require('express').Router()
@@ -6,6 +6,15 @@ const Items = require('../models/Item')
 const upload = require('../middlewares/multer')
 const path = require('path')
 const {nanoid} = require('nanoid')
+
+router.post('/addCupon', checkAdmin, createCupon, async (req, res)=>{
+  res.json(data)
+
+})
+
+router.get('/imageDel/:id',checkAdmin, deleteImg, async (req, res)=>{
+    res.redirect('/admin')
+})
 
 router.get('/edit/:id',  async (req, res)=>{
   item = await Items.findOne({id:req.params.id}).lean()
@@ -82,8 +91,9 @@ router.get('/admin', checkAdmin, async (req,res)=>{
   let tags = await Tags.find().lean()
   if (req.user) {
     var inCart = req.user.inCart
+    var username = req.user.login
 }
-  res.render('admin', {allItems:items,inCart:inCart, categoria: cat, tags: tags })
+  res.render('admin', {allItems:items,inCart:inCart,user:username, categoria: cat, tags: tags })
   
 })
 

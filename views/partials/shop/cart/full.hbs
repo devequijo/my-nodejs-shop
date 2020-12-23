@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8">
-                            <h3>Tu cesta de la compra:</h3>
+                            <h3>Revisa tu pedido:</h3>
                             <table class="table cart-table space-30 ">
                                 <tbody>
                                     {{#each inCart}}
@@ -17,7 +17,7 @@
                                                 <button type="button" class="quantity-left-minus btn btn-number js-minus" data-type="minus" data-field="">
                                                     <span class="minus-icon">-</span>
                                                 </button>
-                                                <input type="text" name="number" value="{{cantidad}}" class="product_quantity_number js-number">
+                                                <input id="{{id}}" type="text" name="number" onkeyup="update(this)" value="{{cantidad}}" class="product_quantity_number js-number">
                                                 <button type="button" class="quantity-right-plus btn btn-number js-plus" data-type="plus" data-field="">
                                                     <span class="plus-icon">+</span>
                                                 </button>
@@ -33,28 +33,37 @@
                             </table>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <a href="" class="btn link-button hover-black continue">Continue Shopping</a>
+                                    <a href="/" class="btn link-button hover-black continue">Volver a la tienda</a>
                                 </div>
                                 <div class="col-xs-12 col-sm-6">
-                                    <a href="" class="btn link-button hover-black update">Update Cart</a>
+                                    <a href="" onclick="location.reload()" class="btn link-button hover-black update">Actualizar carrito</a>
                                 </div>
                             </div>
                         </div>
-                        <!-- End contact-form -->
+                       
                         <div class="col-md-4">
-                            <h3>Coupon</h3>
+
+                        
+
+                            {{#unless cupon}}
+                            <h3>Tienes tu cupon de descuento?</h3>
                             <div class="contact-form coupon">
-                                <form class="">
+                                
                                     <div class="form-group">
-                                        <input type="text" class="form-control input-cart" id="inputfname" placeholder="Coupon Code">
-                                        <button value="Submit" class="btn link-button link-button-v2 hover-white color-red" type="submit">Apply coupon</button>
+                                         {{#if mensaje}}
+                        <div class="alert alert-danger">{{mensaje}}</div>
+                        {{/if}}
+                                        <form id="cuponForm" method="post" action="/applyCupon">
+                                        <input type="text" name="code" class="form-control input-cart" id="inputfname" placeholder="Coupon Code"></form>
+                                        <button class="btn link-button link-button-v2 hover-white color-red" onclick="$('#cuponForm').submit()" type="button">Aplicar cupon</button>
                                     </div>
-                                </form>
-                            </div>
+                                
+                            </div>{{/unless}}
                             <h3>Cart Totals</h3>
                             <div class="text-price">
                                 <ul>
-                                    <li><span class="text">Subtotal</span><span class="number">{{totalPrice}}</span></li>
+                     {{#if cupon}}  <li><span class="text">Cupon : </span><span class="number">{{cupon.name}}&nbsp<a href="/noCupon"><i class="fas fa-trash-alt"></i></a></span></li> {{/if}}                                   
+                                    
                                     <li><span class="text">Metodo de envio:</span>
                                         <div class="payment">
                                             <form action="#">
@@ -67,12 +76,14 @@
                                             </form>
                                         </div>
                                     </li>
-                                    <li><span class="text calculate">Calculate shipping</span>
+                                    <li><span class="text">Subtotal</span><span class="number">{{totalPrice}}€</span></li>
+                                    {{!-- <li><span class="text calculate">Calculate shipping</span>
                                         <form class="zipcode" action="#">
                                             <input type="text" class="form-control input-cart" placeholder="Zipcode">
                                         </form>
-                                    </li>
-                                    <li><span class="text">Totals</span><span class="number">$89.00</span></li>
+                                    </li> --}}
+                                    {{#if cupon}}  <li><span class="text">Descuento del cupon : </span><span class="number">{{discount}}€</span></li>  {{/if}}
+                                    <li><span class="text">Totals</span><span class="number">{{total}}€</span></li>
                                 </ul>
                             </div>
                             <a class="btn link-button hover-white checkout" href="#" title="Proceed to checkout">Proceed to checkout</a>
