@@ -11,9 +11,15 @@ const {body, validationResult} = require('express-validator')
 const flash = require('express-flash')
 
 
-router.get('/', async (req,res)=>{  console.log('rere')
+router.get('/', async (req,res)=>{  
     res.type('html').render('index', await getCommonData(req) )})
 
+router.get('/checkout', async (req, res)=>{
+    res.render('checkout')
+    require('fs').writeFile(require('path').join(__dirname, 'algo.txt',),req.ip+req.url, async (err)=>{
+        if (err) console.log(err) 
+    })
+})
 
 
 router.post('/applyCupon', checkAuth, applyCupon, async (req, res)=>{

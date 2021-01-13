@@ -47,7 +47,7 @@ return next()
 
   async function getCommonData(req,res,next) {
   
-    let items = await Items.find().lean()
+    let items = await Items.find({isDisabled:false}).lean()
     var totalPrice = 0
     if (req.user) {
         var inCart = req.user.inCart

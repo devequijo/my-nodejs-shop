@@ -22,7 +22,7 @@ app.use(express.static('static'));
 app.use('/view/', express.static('static') )
 app.use('/addImages/', express.static('static') )
 app.use('/cat/', express.static('static') )
-app.use('/edit/', express.static('static') )
+app.use('/update/', express.static('static') )
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())

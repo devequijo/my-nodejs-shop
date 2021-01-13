@@ -28,7 +28,8 @@ const schema = new require('mongoose').Schema({
     datos: [userInfoSchema],
     referer:String,
     inviteCode: String,
-    cupon: String
+    cupon: String,
+    notes: String
 })
 
 module.exports = require('mongoose').model('Users', schema)

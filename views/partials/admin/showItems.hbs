@@ -11,7 +11,7 @@
 <ul class="list-group cProductsList"> 
   {{#each allItems}}
     <li class="list-group-item d-flex justify-content-between"><p class="p-0 m-0 flex-grow-1"><b>{{name}}<t>:</b>  {{description}}</t></p> 
-    	<button type="button" onclick="location.href='edit/{{id}}'" class="btn-success">EDIT</button>  <button onclick="location.href='/deleteItem/{{id}}'" type="button" class="btn-danger">DELETE</button>
+    	<button type="button" onclick="location.href='update/{{id}}'" class="btn-success">EDIT</button>  <button onclick="location.href='/deleteItem/{{id}}'" type="button" class="btn-danger">DELETE</button>
        <button type="button" onclick="$('#{{id}}').removeClass('oculto')" class="btn-success">ADD IMAGES</button>
         {{#if thumb}}
         <img with='30' height='30' src="uploads/{{thumb}}"> {{/if}}

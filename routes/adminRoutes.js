@@ -16,12 +16,28 @@ router.get('/imageDel/:id',checkAdmin, deleteImg, async (req, res)=>{
     res.redirect('/admin')
 })
 
-router.get('/edit/:id',  async (req, res)=>{
+router.get('/lol', (req,res)=>console.log('lol'))
+router.post('/update/', async (req,res)=>{
+  console.log(req.body)
+  await Items.findOneAndUpdate({id : req.body.id}, {
+    name:req.body.name,
+    categories:req.body.cat
+  }, {new:true}).then(data=>console.log(data))
+})
+
+
+
+router.get('/update/:id',  async (req, res)=>{
   item = await Items.findOne({id:req.params.id}).lean()
   let cat = await Cat.find().lean()
   req.customGet = {edit:true, item:item, categoria:cat}
   res.render('admin', await getCommonData(req))
 })
+
+
+
+
+
 
 router.post('/setMain', checkAdmin, setMain, async (req, res)=>{
   res.redirect('/admin')
@@ -49,22 +65,26 @@ router.post('/multiUpload', upload.array("file", 10), handeUploaded, async (req,
   res.render('admin',{item:await Items.findOne({id:req.body.itemId}).lean(), aftherAddImage:true})
 })
 
+
+
 router.post('/itemAdd', upload.array('file', 10) , async(req,res)=>{
+  console.log(req.body)
   const item = new Items({
-    id: await nanoid().slice(0,7),
+    id: nanoid().slice(0,7),
     name:req.body.name,
     thumb: req.body.thumb,
     tags: req.body.tag,
     categories:req.body.cat,
     description: req.body.description,
-    price: req.body.price,
+    price: !isNaN(req.body.price)? req.body.price: 0,
     images: [],
     mainImage: '',
-    stock: req.body.stock,
+    stock: !isNaN(req.body.stock)?req.body.stock : 0,
+    inStock: (req.body.stock>0)?true:false,
     offer: req.body.offer,
     enabled: req.body.enabled,
     rating: req.body.rating,
-    isRecomended: req.body.isRecomended,
+    isDisabled: (req.body.isDisabled=='on')?true:false,
     newOne: req.body.newOne,
     author: req.user,    
   })
